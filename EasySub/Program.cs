@@ -1,7 +1,12 @@
+using EasySub.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+builder.Services.AddHttpClient();
+
+builder.Services.AddSingleton<EmailService>(); // Charge automatiquement depuis appsettings.json
 
 var app = builder.Build();
 

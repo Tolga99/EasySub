@@ -1,0 +1,25 @@
+﻿@page
+@model SubscriptionModel
+@{
+    ViewData["Title"] = "Abonnements - Subeasy";
+}
+
+<h1>Choisissez votre abonnement</h1>
+
+<form method="post">
+    <input type="email" asp-for="Email" placeholder="Votre email" required />
+    <select asp-for="SubscriptionType">
+        <option value="Netflix Premium">Netflix Premium</option>
+        <option value="Spotify">Spotify</option>
+    </select>
+    <input type="number" asp-for="Duration" placeholder="Durée (mois)" required />
+    <input type="number" asp-for="Price" placeholder="Prix (€)" required />
+    <button type="submit">Acheter</button>
+</form>
+
+@if (!string.IsNullOrEmpty(Model.Message))
+{
+    <p>@Model.Message</p>
+}
+
+<a href="/">Retour à l'accueil</a>

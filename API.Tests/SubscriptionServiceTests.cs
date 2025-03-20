@@ -1,20 +1,20 @@
-﻿using API.Data;
-using API.Interfaces;
-using API.Models;
-using API.Services;
-using Microsoft.EntityFrameworkCore;
+﻿using Xunit;
 using Moq;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
+using Microsoft.EntityFrameworkCore;
+using API.Services;
+using API.Data;
+using API.Models;
+using API.Interfaces;
+using System.Linq;
 
 namespace API.Tests
 {
-    public class SubscriptionServiceTests
+    public class SubscriptionServiceTests : IDisposable
     {
         private readonly SubscriptionService _subscriptionService;
         private readonly EasySubContext _context;
         private readonly Mock<IEmailService> _mockEmailService;
+        private readonly Mock<IInvoiceService> _mockInvoiceService;
 
         public SubscriptionServiceTests()
         {
@@ -23,78 +23,64 @@ namespace API.Tests
                 .Options;
 
             _context = new EasySubContext(options);
-            _mockEmailService = new Mock<IEmailService>(); // 🎭 Mock du service email
+            _context.Database.OpenConnection();
+            _context.Database.EnsureCreated();
 
-            _subscriptionService = new SubscriptionService(_context, _mockEmailService.Object);
+            _mockEmailService = new Mock<IEmailService>();
+            _mockInvoiceService = new Mock<IInvoiceService>();
 
-            SeedDatabase(); // Remplir la DB avec des données fictives
+            _subscriptionService = new SubscriptionService(_context, _mockEmailService.Object, _mockInvoiceService.Object);
+
+            SeedDatabase();
         }
-        [Fact]
+
         private void SeedDatabase()
         {
-            // 🔄 Nettoyer la table avant le test
-            //ClearDatabase();
+            var netflixBrand = new Brand { Name = "Netflix" };
+            var spotifyBrand = new Brand { Name = "Spotify" };
 
-            _context.Subscriptions.AddRange(new List<Subscription>
-            {
-                new Subscription {Type = "Netflix", DurationMonths = 3, ClientEmail = "beks@example.com", Status = SubscriptionStatus.Active },
-                new Subscription {Type = "Spotify", DurationMonths = 6, ClientEmail = "donnie@example.com", Status = SubscriptionStatus.Pending }
-            });
+            _context.Brands.AddRange(netflixBrand, spotifyBrand);
+            _context.SaveChanges();
+
+            var standardType = new SubscriptionType {  Name = "Standard" };
+            var premiumType = new SubscriptionType { Name = "Premium" };
+
+            _context.SubscriptionTypes.AddRange(standardType, premiumType);
+            _context.SaveChanges();
+
+            var netflixPlan = new SubscriptionPlan { BrandId = 1, SubscriptionTypeId = 2, DurationMonths = 1, Price = 10.99m };
+            var spotifyPlan = new SubscriptionPlan { BrandId = 2, SubscriptionTypeId = 1, DurationMonths = 3, Price = 7.99m };
+
+            _context.SubscriptionPlans.AddRange(netflixPlan, spotifyPlan);
             _context.SaveChanges();
         }
 
         [Fact]
-        public async Task GetAllSubscriptions_ShouldReturn_List()
-        {
-            // Act
-            var result = await _subscriptionService.GetAllSubscriptions();
-
-        }
-        [Fact]
-        public async Task CreateSubscription_ShouldAddToDatabase()
-        {
-
-            // Arrange
-            var subscription = new Subscription
-            {
-                Type = "Netflix",
-                DurationMonths = 3,
-                ClientEmail = "kamil@example.com",
-                Status = SubscriptionStatus.Active
-            };
-
-            await _subscriptionService.CreateSubscription(subscription);
-
-            // Vérification
-            var allSubscriptions = await _subscriptionService.GetAllSubscriptions();
-
-            Console.WriteLine($"Nombre d'abonnements dans la DB : {allSubscriptions.Count}");
-        }
-        [Fact]
-        public async Task CreateSubscription_ShouldSendEmail()
+        public async Task PurchaseSubscription_ShouldCreateSubscription()
         {
             // Arrange
-            var subscription = new Subscription
-            {
-                Type = "Disney+",
-                DurationMonths = 3,
-                ClientEmail = "test@example.com",
-                Status = SubscriptionStatus.Pending
-            };
+            string testEmail = "test@example.com";
+            int netflixPlanId = 1;
+            PaymentStatus paymentStatus = PaymentStatus.Paid;
+
+            var netflixPlan = _context.SubscriptionPlans.FirstOrDefault(p => p.Id == netflixPlanId);
+            Assert.NotNull(netflixPlan);
 
             // Act
-            await _subscriptionService.CreateSubscription(subscription);
+            var result = await _subscriptionService.PurchaseSubscription(testEmail, netflixPlanId, paymentStatus);
 
-            // ✅ Vérifier que l'abonnement a bien été ajouté
-            var allSubscriptions = await _subscriptionService.GetAllSubscriptions();
-            Assert.Contains(allSubscriptions, s => s.ClientEmail == "test@example.com");
+            // Assert
+            Assert.True(result); // Vérifie que l'achat a bien été effectué
 
-            // 🚀 Vérifier si l'email a été envoyé (Regarder la console ou tester avec un mock)
+            var subscription = _context.Subscriptions.FirstOrDefault(s => s.SubscriptionPlanId == netflixPlanId);
+            Assert.NotNull(subscription);
+            Assert.Equal(netflixPlanId, subscription.SubscriptionPlanId);
         }
-        private void ClearDatabase()
+
+        public void Dispose()
         {
-            _context.Subscriptions.RemoveRange(_context.Subscriptions);
-            _context.SaveChanges();
+            _context.Database.CloseConnection();
+            _context.Dispose();
         }
     }
 }

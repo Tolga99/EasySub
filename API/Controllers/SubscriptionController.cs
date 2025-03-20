@@ -18,18 +18,20 @@ namespace API.Controllers
         }
 
         [HttpPost("purchase")]
-        public async Task<IActionResult> PurchaseSubscription([FromBody] Subscription subscription)
+        public async Task<IActionResult> PurchaseSubscription([FromBody] SubscriptionRequest request)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var createdSubscription = await _subscriptionService.CreateSubscription(subscription);
+            var paymentStatus = request.IsPaid ? PaymentStatus.Paid : PaymentStatus.Pending;
+            var success = await _subscriptionService.PurchaseSubscription(request.Email, request.SubscriptionPlanId, paymentStatus);
 
-            if (createdSubscription == null)
+            if (!success)
                 return StatusCode(500, "Une erreur est survenue lors de l'achat.");
 
-            return Ok(new { message = "Abonnement acheté avec succès!", subscription = createdSubscription });
+            return Ok(new { message = "Abonnement acheté avec succès!" });
         }
+
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

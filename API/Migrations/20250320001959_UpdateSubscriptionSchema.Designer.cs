@@ -4,6 +4,7 @@ using API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Migrations
 {
     [DbContext(typeof(EasySubContext))]
-    partial class EasySubContextModelSnapshot : ModelSnapshot
+    [Migration("20250320001959_UpdateSubscriptionSchema")]
+    partial class UpdateSubscriptionSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -37,38 +40,24 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Netflix"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Spotify"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Disney+"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "PlayStation Plus"
-                        },
-                        new
-                        {
-                            Id = 5,
-                            Name = "Amazon Prime"
-                        },
-                        new
-                        {
-                            Id = 6,
-                            Name = "YouTube Premium"
-                        });
+            modelBuilder.Entity("API.Models.BrandSubscriptionType", b =>
+                {
+                    b.Property<int>("BrandId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscriptionTypeId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("BrandId", "SubscriptionTypeId");
+
+                    b.HasIndex("SubscriptionTypeId");
+
+                    b.ToTable("BrandSubscriptionTypes");
                 });
 
             modelBuilder.Entity("API.Models.Invoice", b =>
@@ -159,56 +148,6 @@ namespace API.Migrations
                     b.HasIndex("SubscriptionTypeId");
 
                     b.ToTable("SubscriptionPlans");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BrandId = 1,
-                            DurationMonths = 1,
-                            Price = 7.99m,
-                            SubscriptionTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BrandId = 1,
-                            DurationMonths = 3,
-                            Price = 21.99m,
-                            SubscriptionTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 3,
-                            BrandId = 1,
-                            DurationMonths = 12,
-                            Price = 79.99m,
-                            SubscriptionTypeId = 1
-                        },
-                        new
-                        {
-                            Id = 4,
-                            BrandId = 1,
-                            DurationMonths = 1,
-                            Price = 12.99m,
-                            SubscriptionTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 5,
-                            BrandId = 1,
-                            DurationMonths = 3,
-                            Price = 35.99m,
-                            SubscriptionTypeId = 2
-                        },
-                        new
-                        {
-                            Id = 6,
-                            BrandId = 1,
-                            DurationMonths = 12,
-                            Price = 139.99m,
-                            SubscriptionTypeId = 2
-                        });
                 });
 
             modelBuilder.Entity("API.Models.SubscriptionType", b =>
@@ -226,28 +165,25 @@ namespace API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("SubscriptionTypes");
+                });
 
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Name = "Standard"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Name = "Premium"
-                        },
-                        new
-                        {
-                            Id = 3,
-                            Name = "Family"
-                        },
-                        new
-                        {
-                            Id = 4,
-                            Name = "Student"
-                        });
+            modelBuilder.Entity("API.Models.BrandSubscriptionType", b =>
+                {
+                    b.HasOne("API.Models.Brand", "Brand")
+                        .WithMany("BrandSubscriptionTypes")
+                        .HasForeignKey("BrandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("API.Models.SubscriptionType", "SubscriptionType")
+                        .WithMany("BrandSubscriptionTypes")
+                        .HasForeignKey("SubscriptionTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Brand");
+
+                    b.Navigation("SubscriptionType");
                 });
 
             modelBuilder.Entity("API.Models.Invoice", b =>
@@ -297,6 +233,16 @@ namespace API.Migrations
                     b.Navigation("Brand");
 
                     b.Navigation("SubscriptionType");
+                });
+
+            modelBuilder.Entity("API.Models.Brand", b =>
+                {
+                    b.Navigation("BrandSubscriptionTypes");
+                });
+
+            modelBuilder.Entity("API.Models.SubscriptionType", b =>
+                {
+                    b.Navigation("BrandSubscriptionTypes");
                 });
 #pragma warning restore 612, 618
         }

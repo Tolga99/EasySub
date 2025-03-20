@@ -7,24 +7,26 @@ namespace API.Models
     public class Invoice
     {
         [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id { get; set; }
 
         [Required]
-        [EmailAddress]
-        public string Email { get; set; }
+        public int SubscriptionId { get; set; } // 🔗 Lien vers Subscription
+        public Subscription Subscription { get; set; } = null!;
 
         [Required]
-        public int SubscriptionId { get; set; }
-
-        [ForeignKey("SubscriptionId")]
-        public Subscription Subscription { get; set; }
+        public int SubscriptionPlanId { get; set; } // 🔗 Lien direct vers le plan acheté
+        public SubscriptionPlan SubscriptionPlan { get; set; } = null!;
 
         [Required]
-        public DateTime PurchaseDate { get; set; } = DateTime.UtcNow;
+        public string ClientEmail { get; set; } = string.Empty;
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")] // Prix avec 2 décimales
+        [Column(TypeName = "decimal(10,2)")] // 🔧 Définit la précision et l'échelle
         public decimal Amount { get; set; }
+
+
+        public DateTime CreatedAt { get; set; }
     }
+
+
 }

@@ -5,6 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddHttpClient();
+builder.Services.AddHttpClient<BrandService>();
 
 builder.Services.AddSingleton<EmailService>(); // Charge automatiquement depuis appsettings.json
 

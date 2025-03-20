@@ -2,8 +2,10 @@
 {
     public enum PaymentMethod
     {
-        Paypal,
-        Bitcoin,
-        CreditCard
+        CreditCard,
+        PayPal,
+        Crypto,
+        BankTransfer
     }
+
 }

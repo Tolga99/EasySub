@@ -3,17 +3,15 @@
 @{
     ViewData["Title"] = "Accueil - Subeasy";
 }
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewData["Title"]</title>
-</head>
-<body>
-    <h1>Bienvenue sur Subeasy</h1>
-    <p>Découvrez nos abonnements à prix réduits.</p>
 
-    <a href="/Subscription">Voir les abonnements</a>
-</body>
-</html>
+<h1>Bienvenue sur Subeasy</h1>
+<p>Découvrez nos abonnements à prix réduits.</p>
+
+<ul>
+    @foreach (var brand in Model.Brands)
+    {
+        <li>
+            <a href="/Subscription?brandId=@brand.Id">@brand.Name</a>
+        </li>
+    }
+</ul>

@@ -12,6 +12,8 @@ builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IInvoiceService, InvoiceService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
+builder.Services.AddScoped<ISubscriptionTypeService, SubscriptionTypeService>();
+builder.Services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

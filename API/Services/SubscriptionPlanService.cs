@@ -19,12 +19,12 @@ namespace API.Services
 
         public async Task<List<SubscriptionPlan>> GetAllPlans()
         {
-            return await _context.SubscriptionPlans.ToListAsync();
+            return await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).ToListAsync();
         }
 
         public async Task<SubscriptionPlan?> GetPlanById(int id)
         {
-            return await _context.SubscriptionPlans.FindAsync(id);
+            return await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<SubscriptionPlan> CreatePlan(SubscriptionPlan plan)
@@ -36,7 +36,7 @@ namespace API.Services
 
         public async Task<bool> DeletePlan(int id)
         {
-            var plan = await _context.SubscriptionPlans.FindAsync(id);
+            var plan = await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).FirstOrDefaultAsync(a => a.Id == id);
             if (plan == null)
                 return false;
 

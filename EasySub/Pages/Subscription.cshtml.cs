@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using EasySub.Interfaces;
+using EasySub.Models;
+using EasySub.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Net.Http;
 using System.Text;
@@ -9,38 +12,46 @@ namespace EasySub.Pages
 {
     public class SubscriptionModel : PageModel
     {
-        private readonly HttpClient _httpClient;
+        private readonly ISubscriptionPlanService _planService;
+        private readonly IBrandService _brandService;
 
-        public SubscriptionModel(IHttpClientFactory httpClientFactory)
+        public SubscriptionModel(ISubscriptionPlanService planService, IBrandService brandService)
         {
-            _httpClient = httpClientFactory.CreateClient();
+            _planService = planService;
+            _brandService = brandService;
         }
 
-        [BindProperty] public string Email { get; set; }
-        [BindProperty] public string SubscriptionType { get; set; }
-        [BindProperty] public int Duration { get; set; }
-        public string Message { get; set; }
-        [BindProperty] public decimal Price { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int BrandId { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public string BrandName { get; set; }
+        public List<SubscriptionPlan> Plans { get; set; }
+        public List<string> SubscriptionTypes { get; set; }
+        public List<int> Durations { get; set; }
+        public decimal SelectedPrice { get; set; }
+
+        public async Task<IActionResult> OnGetAsync()
         {
-            var subscriptionData = new
-            {
-                Type = SubscriptionType,
-                DurationMonths = Duration,
-                ClientEmail = Email,
-                Status = "Pending",
-                price = Price,
-            };
+            var brand = await _brandService.FindAsync(BrandId);
+            if (brand == null) return NotFound();
 
-            var json = JsonSerializer.Serialize(subscriptionData);
-            var content = new StringContent(json, Encoding.UTF8, "application/json");
+            BrandName = brand.Name;
 
-            var response = await _httpClient.PostAsync("https://localhost:7237/api/subscription/purchase", content);
+            // Récupérer les plans depuis l’API
+            Plans = await _planService.GetPlansByBrandIdAsync(BrandId);
 
-            Message = response.IsSuccessStatusCode ? "Abonnement acheté avec succès !" : "Erreur lors de l'achat.";
+            // Extraire les SubscriptionTypes et Durations
+            SubscriptionTypes = Plans.Select(p => p.SubscriptionType.Name).Distinct().ToList();
+            Durations = Plans.Select(p => p.DurationMonths).Distinct().ToList();
 
             return Page();
+        }
+
+
+        public IActionResult OnPostGetPrice(string subscriptionType, int duration)
+        {
+            var plan = Plans.FirstOrDefault(p => p.SubscriptionType.Name == subscriptionType && p.DurationMonths == duration);
+            return new JsonResult(new { price = plan?.Price ?? 0 });
         }
     }
 }

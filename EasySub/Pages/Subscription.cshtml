@@ -4,22 +4,88 @@
     ViewData["Title"] = "Abonnements - Subeasy";
 }
 
-<h1>Choisissez votre abonnement</h1>
+<h1>Choisissez votre abonnement chez @Model.BrandName</h1>
 
 <form method="post">
-    <input type="email" asp-for="Email" placeholder="Votre email" required />
-    <select asp-for="SubscriptionType">
-        <option value="Netflix Premium">Netflix Premium</option>
-        <option value="Spotify">Spotify</option>
+    <input type="hidden" asp-for="BrandId" />
+
+    <label for="subscriptionType">Type d'abonnement :</label>
+    <select id="subscriptionType" required>
+        <option value="">Sélectionnez un type</option>
+        @foreach (var type in Model.SubscriptionTypes)
+        {
+            <option value="@type">@type</option>
+        }
     </select>
-    <input type="number" asp-for="Duration" placeholder="Durée (mois)" required />
-    <input type="number" asp-for="Price" placeholder="Prix (€)" required />
-    <button type="submit">Acheter</button>
+
+    <label for="duration">Durée (mois) :</label>
+    <select id="duration" required>
+        <option value="">Sélectionnez une durée</option>
+    </select>
+
+    <p>Prix: <span id="price">0.00</span>€</p>
+
+    <button type="submit" id="buyButton" disabled>Acheter</button>
 </form>
 
-@if (!string.IsNullOrEmpty(Model.Message))
-{
-    <p>@Model.Message</p>
-}
-
 <a href="/">Retour à l'accueil</a>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        let subscriptionTypeSelect = document.getElementById("subscriptionType");
+        let durationSelect = document.getElementById("duration");
+        let priceSpan = document.getElementById("price");
+        let buyButton = document.getElementById("buyButton");
+
+        subscriptionTypeSelect.addEventListener("change", function () {
+            updateDurations(subscriptionTypeSelect.value);
+            updateBuyButton(); // Vérifie si on peut activer le bouton
+        });
+
+        durationSelect.addEventListener("change", function () {
+            updatePrice(subscriptionTypeSelect.value, durationSelect.value);
+            updateBuyButton(); // Vérifie si on peut activer le bouton
+        });
+
+        function updateDurations(subscriptionType) {
+            durationSelect.innerHTML = '<option value="">Sélectionnez une durée</option>';
+
+            let durations = [...new Set(subscriptionPlans
+                .filter(plan => plan.subscriptionType.name === subscriptionType)
+                .map(plan => plan.durationMonths))];
+
+            durations.forEach(duration => {
+                let option = document.createElement("option");
+                option.value = duration;
+                option.textContent = `${duration} mois`;
+                durationSelect.appendChild(option);
+            });
+
+            priceSpan.textContent = "0.00";
+            updateBuyButton(); // Vérifie si on peut activer le bouton
+        }
+
+        function updatePrice(subscriptionType, duration) {
+            let plan = subscriptionPlans.find(plan =>
+                plan.subscriptionType.name === subscriptionType &&
+                plan.durationMonths == duration);
+
+            priceSpan.textContent = plan ? plan.price.toFixed(2) : "0.00";
+            updateBuyButton(); // Vérifie si on peut activer le bouton
+        }
+
+        function updateBuyButton() {
+            let subscriptionType = subscriptionTypeSelect.value;
+            let duration = durationSelect.value;
+            let price = parseFloat(priceSpan.textContent);
+
+            // Désactiver le bouton si les sélections ne sont pas complètes ou si le prix est 0
+            buyButton.disabled = !(subscriptionType && duration && price > 0);
+        }
+    });
+</script>
+
+
+<script>
+    var subscriptionPlans = @Html.Raw(Json.Serialize(Model.Plans));
+</script>

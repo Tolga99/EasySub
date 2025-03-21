@@ -1,4 +1,5 @@
 
+using EasySub.Interfaces;
 using EasySub.Models;
 using EasySub.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -9,11 +10,11 @@ namespace EasySub.Pages;
 
 public class IndexModel : PageModel
 {
-    private readonly BrandService _brandService;
+    private readonly IBrandService _brandService;
 
     public List<Brand> Brands { get; set; }
 
-    public IndexModel(BrandService brandService)
+    public IndexModel(IBrandService brandService)
     {
         _brandService = brandService;
     }

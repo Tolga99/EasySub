@@ -17,5 +17,9 @@ namespace API.Services
         {
             return await _context.Brands.ToListAsync();
         }
+        public async Task<Brand?> GetBrandById(int id)
+        {
+            return await _context.Brands.FindAsync(id);
+        }
     }
 }

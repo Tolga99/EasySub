@@ -44,5 +44,13 @@ namespace API.Services
             await _context.SaveChangesAsync();
             return true;
         }
+        public async Task<List<SubscriptionPlan>> GetPlansByBrandId(int brandId)
+        {
+            return await _context.SubscriptionPlans
+                .Where(sp => sp.BrandId == brandId)
+                .Include(sp => sp.SubscriptionType)
+                .ToListAsync();
+        }
+
     }
 }

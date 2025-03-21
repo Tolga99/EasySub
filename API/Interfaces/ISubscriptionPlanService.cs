@@ -10,5 +10,6 @@ namespace API.Interfaces
         Task<SubscriptionPlan?> GetPlanById(int id);
         Task<SubscriptionPlan> CreatePlan(SubscriptionPlan plan);
         Task<bool> DeletePlan(int id);
+        Task<List<SubscriptionPlan>> GetPlansByBrandId(int brandId);
     }
 }

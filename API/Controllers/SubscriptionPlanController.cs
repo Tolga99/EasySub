@@ -20,5 +20,15 @@ namespace API.Controllers
             var plans = await _subscriptionPlanService.GetAllPlans();
             return Ok(plans);
         }
+        [HttpGet("{brandId}")]
+        public async Task<IActionResult> GetByBrandId(int brandId)
+        {
+            var plans = await _subscriptionPlanService.GetPlansByBrandId(brandId);
+            if (!plans.Any())
+            {
+                return NotFound(new { message = "No subscription plans found for this brand" });
+            }
+            return Ok(plans);
+        }
     }
 }

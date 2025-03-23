@@ -20,8 +20,11 @@ namespace API.Models
         public PaymentStatus PaymentStatus { get; set; }
 
         public DateTime? ExpirationDate { get; set; } // ✅ Ajouté pour indiquer la fin de l’abonnement
-        public Account? Account { get; set; } // Relation 1-1 avec Account
+                                                      // Clé étrangère inverse (facultatif)
+        public int AccountId { get; set; }
 
+        // Navigation vers Account (relation 1-1)
+        public Account Account { get; set; } = null!;
     }
 
 

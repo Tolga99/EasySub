@@ -41,6 +41,11 @@ namespace API.Data
                 .WithMany()
                 .HasForeignKey(s => s.SubscriptionPlanId)
                 .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Account>()
+                .HasOne(a => a.Subscription) // Un Account a un Subscription
+                .WithOne(s => s.Account) // Un Subscription a un Account
+                .HasForeignKey<Subscription>(s => s.AccountId) // Clé étrangère dans Subscription
+                .IsRequired(); // Rendre la relation obligatoire ou non (enlever si facultatif)
 
             // 🔹 Relation SubscriptionPlan → Brand
             modelBuilder.Entity<SubscriptionPlan>()

@@ -60,15 +60,17 @@ namespace API.Services
         public async Task<bool> AssignSubscriptionToAccount(int accountId, int subscriptionId)
         {
             var account = await _context.Accounts.FindAsync(accountId);
-            if (account == null) return false;
-
             var subscription = await _context.Subscriptions.FindAsync(subscriptionId);
-            if (subscription == null) return false;
 
+            if (account == null || subscription == null) return false;
+
+            // Mise à jour de la relation dans les deux sens
             account.SubscriptionId = subscriptionId;
-            account.Subscription.ExpirationDate = subscription.ExpirationDate;
+            subscription.AccountId = accountId;
+
             return await _context.SaveChangesAsync() > 0;
         }
+
 
         // 7. Supprimer l'abonnement d'un compte
         public async Task<bool> UnassignSubscription(int accountId)

@@ -21,10 +21,10 @@ namespace API.Models
 
         public DateTime? ExpirationDate { get; set; } // ✅ Ajouté pour indiquer la fin de l’abonnement
                                                       // Clé étrangère inverse (facultatif)
-        public int AccountId { get; set; }
+        public int? AccountId { get; set; }
 
         // Navigation vers Account (relation 1-1)
-        public Account Account { get; set; } = null!;
+        public Account? Account { get; set; } = null!;
     }
 
 

@@ -6,24 +6,53 @@
 
 <h1>Choisissez votre abonnement chez @Model.BrandName</h1>
 
-<form method="post">
+<form method="post" asp-page-handler="Purchase">
     <input type="hidden" asp-for="BrandId" />
 
     <label for="subscriptionType">Type d'abonnement :</label>
-    <select id="subscriptionType" required>
+    <select asp-for="SelectedSubscriptionType" id="subscriptionType" required>
         <option value="">Sélectionnez un type</option>
         @foreach (var type in Model.SubscriptionTypes)
         {
             <option value="@type">@type</option>
         }
     </select>
+    <span asp-validation-for="SelectedSubscriptionType" class="text-danger"></span>
 
     <label for="duration">Durée (mois) :</label>
-    <select id="duration" required>
+    <select asp-for="SelectedDuration" id="duration" required>
         <option value="">Sélectionnez une durée</option>
+        @foreach (var duration in Model.Durations)
+        {
+            <option value="@duration">@duration mois</option>
+        }
     </select>
+    <span asp-validation-for="SelectedDuration" class="text-danger"></span>
+
+    <label for="email">Email :</label>
+    <input type="email" asp-for="Email" id="email" required />
+    <span asp-validation-for="Email" class="text-danger"></span>
+
+    <label for="confirmEmail">Confirmer l'Email :</label>
+    <input type="email" asp-for="ConfirmEmail" id="confirmEmail" required />
+    <span asp-validation-for="ConfirmEmail" class="text-danger"></span>
 
     <p>Prix: <span id="price">0.00</span>€</p>
+
+    <label>Moyen de paiement :</label>
+    <div>
+        <input type="radio" asp-for="PaymentMethod" value="Paypal" id="paypal" required />
+        <label for="paypal">PayPal</label>
+    </div>
+    <div>
+        <input type="radio" asp-for="PaymentMethod" value="CB" id="cb" required />
+        <label for="cb">Carte Bancaire</label>
+    </div>
+    <div>
+        <input type="radio" asp-for="PaymentMethod" value="BTC" id="btc" required />
+        <label for="btc">Bitcoin</label>
+    </div>
+    <span asp-validation-for="PaymentMethod" class="text-danger"></span>
 
     <button type="submit" id="buyButton" disabled>Acheter</button>
 </form>
@@ -37,55 +66,43 @@
         let priceSpan = document.getElementById("price");
         let buyButton = document.getElementById("buyButton");
 
-        subscriptionTypeSelect.addEventListener("change", function () {
-            updateDurations(subscriptionTypeSelect.value);
-            updateBuyButton(); // Vérifie si on peut activer le bouton
-        });
+        // Stocke les plans côté client
+        let plans = @Html.Raw(Json.Serialize(Model.Plans));
 
-        durationSelect.addEventListener("change", function () {
-            updatePrice(subscriptionTypeSelect.value, durationSelect.value);
-            updateBuyButton(); // Vérifie si on peut activer le bouton
-        });
+        function updatePrice() {
+            let subscriptionType = subscriptionTypeSelect.value;
+            let duration = parseInt(durationSelect.value);
 
-        function updateDurations(subscriptionType) {
-            durationSelect.innerHTML = '<option value="">Sélectionnez une durée</option>';
+            if (!subscriptionType || !duration) {
+                priceSpan.textContent = "0.00";
+                checkFormValidity();
+                return;
+            }
 
-            let durations = [...new Set(subscriptionPlans
-                .filter(plan => plan.subscriptionType.name === subscriptionType)
-                .map(plan => plan.durationMonths))];
-
-            durations.forEach(duration => {
-                let option = document.createElement("option");
-                option.value = duration;
-                option.textContent = `${duration} mois`;
-                durationSelect.appendChild(option);
-            });
-
-            priceSpan.textContent = "0.00";
-            updateBuyButton(); // Vérifie si on peut activer le bouton
-        }
-
-        function updatePrice(subscriptionType, duration) {
-            let plan = subscriptionPlans.find(plan =>
-                plan.subscriptionType.name === subscriptionType &&
-                plan.durationMonths == duration);
+            let plan = plans.find(p => p.subscriptionType.name === subscriptionType && p.durationMonths === duration);
 
             priceSpan.textContent = plan ? plan.price.toFixed(2) : "0.00";
-            updateBuyButton(); // Vérifie si on peut activer le bouton
+            checkFormValidity();
         }
 
-        function updateBuyButton() {
-            let subscriptionType = subscriptionTypeSelect.value;
-            let duration = durationSelect.value;
+        function checkFormValidity() {
+            let email = document.getElementById("email").value;
+            let confirmEmail = document.getElementById("confirmEmail").value;
+            let paymentChecked = document.querySelector('input[name="PaymentMethod"]:checked');
             let price = parseFloat(priceSpan.textContent);
 
-            // Désactiver le bouton si les sélections ne sont pas complètes ou si le prix est 0
-            buyButton.disabled = !(subscriptionType && duration && price > 0);
+            buyButton.disabled = !(email && confirmEmail && email === confirmEmail && paymentChecked && price > 0);
         }
+
+        subscriptionTypeSelect.addEventListener("change", updatePrice);
+        durationSelect.addEventListener("change", updatePrice);
+        document.getElementById("email").addEventListener("input", checkFormValidity);
+        document.getElementById("confirmEmail").addEventListener("input", checkFormValidity);
+        document.querySelectorAll('input[name="PaymentMethod"]').forEach(input => input.addEventListener("change", checkFormValidity));
+
+        // Mise à jour initiale au chargement
+        updatePrice();
     });
-</script>
 
 
-<script>
-    var subscriptionPlans = @Html.Raw(Json.Serialize(Model.Plans));
 </script>

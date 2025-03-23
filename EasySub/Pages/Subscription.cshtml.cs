@@ -1,57 +1,89 @@
-﻿using EasySub.Interfaces;
-using EasySub.Models;
-using EasySub.Services;
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
+using System.ComponentModel.DataAnnotations;
+using EasySub.Interfaces;
+using EasySub.Models;
+using System.Linq;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using Microsoft.EntityFrameworkCore;
+using System.Numerics;
 
-namespace EasySub.Pages
+public class SubscriptionModel : PageModel
 {
-    public class SubscriptionModel : PageModel
-    {
-        private readonly ISubscriptionPlanService _planService;
-        private readonly IBrandService _brandService;
+    private readonly ISubscriptionPlanService _planService;
+    private readonly IBrandService _brandService;
 
-        public SubscriptionModel(ISubscriptionPlanService planService, IBrandService brandService)
+    public SubscriptionModel(ISubscriptionPlanService planService, IBrandService brandService)
+    {
+        _planService = planService;
+        _brandService = brandService;
+    }
+
+    [BindProperty(SupportsGet = true)]
+    public int BrandId { get; set; }
+    [BindProperty]
+    public string BrandName { get; set; }
+    [BindProperty]
+    public List<SubscriptionPlan> Plans { get; set; }
+    [BindProperty]
+    public List<string> SubscriptionTypes { get; set; }
+    [BindProperty]
+    public List<int> Durations { get; set; }
+
+    [BindProperty]
+    public string SelectedSubscriptionType { get; set; } = string.Empty;
+
+    [BindProperty]
+    public int SelectedDuration { get; set; }
+
+    [BindProperty]
+    [Required, EmailAddress]
+    public string Email { get; set; } = string.Empty;
+
+    [BindProperty]
+    [Required, EmailAddress]
+    public string ConfirmEmail { get; set; } = string.Empty;
+
+    [BindProperty]
+    [Required]
+    public string PaymentMethod { get; set; } = string.Empty;
+
+    public async Task<IActionResult> OnGetAsync()
+    {
+        var brand = await _brandService.FindAsync(BrandId);
+        if (brand == null) return NotFound();
+
+        BrandName = brand.Name;
+        Plans = _planService.GetPlansByBrandIdAsync(BrandId).Result;
+        SubscriptionTypes = Plans.Select(p => p.SubscriptionType.Name).Distinct().ToList();
+        Durations = Plans.Select(p => p.DurationMonths).Distinct().ToList();
+
+        return Page();
+    }
+
+    public async Task<IActionResult> OnPostPurchaseAsync()
+    {
+        var selectedPlan = Plans.FirstOrDefault(p => p.SubscriptionType.Name == SelectedSubscriptionType && p.DurationMonths == SelectedDuration);
+        if (selectedPlan == null)
         {
-            _planService = planService;
-            _brandService = brandService;
+            return BadRequest("Le plan sélectionné n'existe pas.");
         }
 
-        [BindProperty(SupportsGet = true)]
-        public int BrandId { get; set; }
-
-        public string BrandName { get; set; }
-        public List<SubscriptionPlan> Plans { get; set; }
-        public List<string> SubscriptionTypes { get; set; }
-        public List<int> Durations { get; set; }
-        public decimal SelectedPrice { get; set; }
-
-        public async Task<IActionResult> OnGetAsync()
+        if (Email != ConfirmEmail)
         {
-            var brand = await _brandService.FindAsync(BrandId);
-            if (brand == null) return NotFound();
-
-            BrandName = brand.Name;
-
-            // Récupérer les plans depuis l’API
-            Plans = await _planService.GetPlansByBrandIdAsync(BrandId);
-
-            // Extraire les SubscriptionTypes et Durations
-            SubscriptionTypes = Plans.Select(p => p.SubscriptionType.Name).Distinct().ToList();
-            Durations = Plans.Select(p => p.DurationMonths).Distinct().ToList();
-
+            ModelState.AddModelError("ConfirmEmail", "Les emails ne correspondent pas.");
             return Page();
         }
 
+        var response = await _planService.PurchaseSubscriptionAsync(Email, selectedPlan.Id, true);
 
-        public IActionResult OnPostGetPrice(string subscriptionType, int duration)
+        if (!response.IsSuccessStatusCode)
         {
-            var plan = Plans.FirstOrDefault(p => p.SubscriptionType.Name == subscriptionType && p.DurationMonths == duration);
-            return new JsonResult(new { price = plan?.Price ?? 0 });
+            return StatusCode((int)response.StatusCode, "Erreur lors de l'achat");
         }
+
+        return RedirectToPage("Success");
     }
 }

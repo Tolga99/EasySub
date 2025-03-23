@@ -46,9 +46,9 @@ namespace API.Services
         }
         public async Task<List<SubscriptionPlan>> GetPlansByBrandId(int brandId)
         {
-            return await _context.SubscriptionPlans
+            return await _context.SubscriptionPlans.AsNoTracking()
                 .Where(sp => sp.BrandId == brandId)
-                .Include(sp => sp.SubscriptionType)
+                .Include(sp => sp.SubscriptionType).Include(a => a.Brand)
                 .ToListAsync();
         }
 

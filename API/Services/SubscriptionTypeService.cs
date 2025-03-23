@@ -22,7 +22,7 @@ namespace API.Services
 
         public async Task<bool> DeleteType(int id)
         {
-            var type = await _context.SubscriptionTypes.FindAsync(id);
+            var type = await _context.SubscriptionTypes.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
             if (type == null)
                 return false;
 
@@ -33,12 +33,12 @@ namespace API.Services
 
         public async Task<List<SubscriptionType>> GetAllTypes()
         {
-            return await _context.SubscriptionTypes.ToListAsync();
+            return await _context.SubscriptionTypes.AsNoTracking().ToListAsync();
         }
 
         public async Task<SubscriptionType?> GetTypeById(int id)
         {
-            return await _context.SubscriptionTypes.FindAsync(id);
+            return await _context.SubscriptionTypes.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
     }
 }

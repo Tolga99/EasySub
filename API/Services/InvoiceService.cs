@@ -15,18 +15,19 @@ namespace API.Services
             _context = context;
         }
 
-        public async Task<Invoice> CreateInvoiceForSubscription(Subscription subscription)
+        public async Task<Invoice> CreateInvoice(int subscriptionId, int planId, string clientEmail, decimal amount)
         {
             var invoice = new Invoice
             {
-                SubscriptionId = subscription.Id,
-                Amount = subscription.SubscriptionPlan.Price, // 🔥 Récupération du prix du plan
+                SubscriptionId = subscriptionId,
+                SubscriptionPlanId = planId,
+                ClientEmail = clientEmail,
+                Amount = amount,
                 CreatedAt = DateTime.UtcNow
             };
 
             _context.Invoices.Add(invoice);
             await _context.SaveChangesAsync();
-
             return invoice;
         }
 

@@ -15,11 +15,11 @@ namespace API.Services
         }
         public async Task<List<Brand>> GetAllBrands()
         {
-            return await _context.Brands.ToListAsync();
+            return await _context.Brands.AsNoTracking().ToListAsync();
         }
         public async Task<Brand?> GetBrandById(int id)
         {
-            return await _context.Brands.FindAsync(id);
+            return await _context.Brands.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
         }
     }
 }

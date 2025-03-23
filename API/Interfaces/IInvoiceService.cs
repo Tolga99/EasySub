@@ -5,6 +5,6 @@ namespace API.Interfaces
 {
     public interface IInvoiceService
     {
-        Task<Invoice?> CreateInvoiceForSubscription(Subscription subscription);
+        Task<Invoice> CreateInvoice(int subscriptionId, int planId, string clientEmail, decimal amount);
     }
 }

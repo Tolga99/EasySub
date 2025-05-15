@@ -1,0 +1,318 @@
+﻿@page "/subscription/{paramBrandName}"
+@using Website.Interfaces
+@using Website.Models
+@inject ISubscriptionPlanService PlanService
+@inject IBrandService BrandService
+@inject NavigationManager Nav
+@rendermode InteractiveServer
+@using MudBlazor
+@if (IsLoading) 
+{
+	<MudSpinner Size="Size.Large" />
+}else
+{
+	<h1>Choisissez votre abonnement chez @BrandName</h1>
+
+	<div style="display:flex; place-content: space-evenly;">
+		<div style="width: 40%;border-radius: 20px;background-color: #2b1f38;">
+			<div style="place-self:center">
+				<span class="payment-card-title">Netflix</span>
+			</div>
+			<div style="text-align: center;">
+				<img style="width: 277px;height: 277px;" src="/images/netflix-logo-png-2574-10.png" />
+			</div>
+			<div style="display:flex;place-content:space-between;">
+				<div class="sub-card @(selectedDuration == 12 ? "selected" : "")" @onclick="@(() => SelectPlan(12, 3.99m))">
+					<div style="place-self: center; margin: 10px 0px 10px 0px;">
+						<span class="sub-length">12 mois</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span class="sub-price">3.99€</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span class="sub-price-by-month">3.99€</span>
+						<span class="sub-price-by-month" style="color:black"> / mois</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span style="color: #000000; text-align: center; font-family: 'Inter-Medium', sans-serif;
+						  font-size: 10px;
+						  letter-spacing: 0.02em;
+						  font-weight: 500;">Vous economisez 2€</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<button class="select-sub" id="btn-subcard">
+							<span style="color: #ffffff;
+    font-family: " Inter-Medium", sans-serif;
+							font-size: 8px;
+							letter-spacing: 0.02em;
+							font-weight: 500;">Select</span>
+						</button>
+					</div>
+				</div>
+				<div class="sub-card @(selectedDuration == 3 ? "selected" : "")" @onclick="@(() => SelectPlan(3, 3.99m))">
+					<div style="place-self: center; margin: 10px 0px 10px 0px;">
+						<span class="sub-length">3 mois</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span class="sub-price">3.99€</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span class="sub-price-by-month">3.99€</span>
+						<span class="sub-price-by-month" style="color:black"> / mois</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span style="color: #000000; text-align: center; font-family: 'Inter-Medium', sans-serif;
+						  font-size: 10px;
+						  letter-spacing: 0.02em;
+						  font-weight: 500;">Vous economisez 2€</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<button class="select-sub" id="btn-subcard">
+							<span style="color: #ffffff;
+    font-family: " Inter-Medium", sans-serif;
+							font-size: 8px;
+							letter-spacing: 0.02em;
+							font-weight: 500;">Select</span>
+						</button>
+					</div>
+				</div>
+				<div class="sub-card @(selectedDuration == 1 ? "selected" : "")" @onclick="@(() => SelectPlan(1, 3.99m))">
+					<div style="place-self: center; margin: 10px 0px 10px 0px;">
+						<span class="sub-length">1 mois</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span class="sub-price">3.99€</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span class="sub-price-by-month">3.99€</span>
+						<span class="sub-price-by-month" style="color:black"> / mois</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<span style="color: #000000; text-align: center; font-family: 'Inter-Medium', sans-serif;
+						  font-size: 10px;
+						  letter-spacing: 0.02em;
+						  font-weight: 500;">Vous economisez 2€</span>
+					</div>
+					<div style="place-self: center;
+    margin: 10px 0px 10px 0px;">
+						<button class="select-sub" id="btn-subcard">
+							<span style="color: #ffffff;
+    font-family: " Inter-Medium", sans-serif;
+							font-size: 8px;
+							letter-spacing: 0.02em;
+							font-weight: 500;">Select</span>
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div style="width: 40%;border-radius: 20px;background-color: #2b1f38;display: flow;">
+			<div style="font-family: ' Inter-Bold', sans-serif;font-size: 28px;line-height: 73px;width: 100%;display: grid;place-content: center;height: 50%;">
+				<span class="payment-card-title">
+					@selectedDuration month
+					<MudSelect Value="SelectedPlan.SubscriptionType.Name" Label="Select a Plan" Variant="Variant.Outlined" Clearable="true">
+						@foreach (var type in SubscriptionTypes)
+						{
+							<MudSelectItem Value="@type">@type</MudSelectItem>
+						}
+					</MudSelect>
+					@*Select Type of subscription*@ 
+					@* 				@if (SelectedPlan != null && SelectedPlan.SubscriptionType != null)
+				{
+					<MudSelect Value="SelectedPlan.SubscriptionType.Name" Label="Select a Plan" FitContent="true" Variant="Variant.Outlined" Clearable="true">
+						@foreach (var type in SubscriptionTypes)
+						{
+							<MudSelectItem Value="@type">@type</MudSelectItem>
+						}
+					</MudSelect>
+				}
+				else
+				{
+					<span>No plan selected.</span>
+				} *@
+					Premium (4k)
+				</span>
+				@* 			<MudNumericField @bind-Value="IntValue" Label="Quantity" Variant="Variant.Outlined" Max="5" />
+ *@			<div style="display:flex">
+					<span class="selling-price">99.99€</span>
+					<span class="discount-price">250.00€</span>
+				</div>
+			</div>
+			<div class="center-line"></div>
+
+			<div style="place-self:center">
+				<span class="payment-card-title">Payment methods</span>
+			</div>
+		</div>
+	</div>
+
+	@* <EditForm Model="subscriptionModel" OnValidSubmit="BuyAsync">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+	<label>Type d'abonnement :</label>
+	<select @bind="subscriptionModel.SubscriptionType">
+		@foreach (var type in SubscriptionTypes)
+		{
+			<option value="@type">@type</option>
+		}
+	</select>
+
+	<label>Durée (mois) :</label>
+	<select @bind="subscriptionModel.Duration">
+		@foreach (var duration in Durations)
+		{
+			<option value="@duration">@duration mois</option>
+		}
+	</select>
+
+	<label>Email :</label>
+	<InputText type="email" @bind-Value="subscriptionModel.Email" />
+
+	<label>Confirmer l'Email :</label>
+	<InputText type="email" @bind-Value="subscriptionModel.ConfirmEmail" />
+
+	<p>Prix : <strong>@Price.ToString("0.00") €</strong></p>
+
+	<label>Moyen de paiement :</label>
+	<InputRadioGroup @bind-Value="subscriptionModel.PaymentMethod">
+		<InputRadio Value="@PaymentMethods.Paypal" /> PayPal
+		<InputRadio Value="@PaymentMethods.CB" /> Carte Bancaire
+		<InputRadio Value="@PaymentMethods.BTC" /> Bitcoin
+	</InputRadioGroup>
+
+	<button type="submit" disabled="@(CanBuy == false)">Acheter</button>
+</EditForm>
+ *@
+	<a href="/">Retour à l'accueil</a>
+}
+@code {
+	private SubscriptionModel subscriptionModel = new SubscriptionModel();
+	private int selectedDuration = 12; // ou null si tu préfères
+	private bool IsLoading { get; set; } = true;  // Variable pour indiquer l'état de chargement.
+
+	[Parameter]
+	public string paramBrandName { get; set; } //contient le nom du brand
+
+	public string BrandName { get; set; } = string.Empty;
+	public List<SubscriptionPlan>? Plans { get; set; } //Tous les types d'abonnements possible
+	public SubscriptionPlan? SelectedPlan { get; set; }
+	public Brand? SelectedBrand { get; set; }
+	public List<string>? SubscriptionTypes { get; set; }
+	public List<int>? Durations { get; set; }
+
+	private decimal Price = 0;
+
+	private bool CanBuy => !string.IsNullOrEmpty(subscriptionModel.Email) &&
+							subscriptionModel.Email == subscriptionModel.ConfirmEmail &&
+							Price > 0 &&
+							!string.IsNullOrEmpty(subscriptionModel.PaymentMethod);
+
+	// protected override async Task OnInitializedAsync()
+	// {
+	// 	Console.WriteLine($"Chargement de la page pour: {paramBrandName}");
+
+	// 	if (!string.IsNullOrEmpty(paramBrandName))
+	// 	{
+	// 		SelectedBrand = await BrandService.GetByName(paramBrandName);
+	// 	}
+	// }
+	protected override async Task OnInitializedAsync()
+	{
+		Console.WriteLine($"Chargement de la page pour: {paramBrandName}");
+		try
+		{
+			if (!string.IsNullOrEmpty(paramBrandName))
+			{
+				SelectedBrand = await BrandService.GetByName(paramBrandName);
+				if (SelectedBrand == null)
+				{
+					// Gestion de l'absence de la marque, par exemple, redirection ou affichage d'un message.
+					Nav.NavigateTo("/notfound");
+
+					return;
+				}
+				await LoadSubscriptionTypes();
+			}
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Erreur dans l'initialisation : {ex.Message}");
+		}
+	}
+	void cbSelectedPlans(object value)
+	{
+		Console.WriteLine($"Cb test: {value}");
+
+		// populate another mudSelect with items based on this value
+	}
+	private async Task LoadSubscriptionTypes()
+	{
+		try
+		{
+			BrandName = SelectedBrand.Name;
+			Plans = (await PlanService.GetPlansByBrandIdAsync(SelectedBrand.Id)).Where(a => a.DurationMonths == selectedDuration).ToList();
+			SubscriptionTypes = Plans.Select(p => p.SubscriptionType.Name).Distinct().ToList();
+			SelectedPlan = Plans.FirstOrDefault(a => a.BrandId == SelectedBrand.Id && a.DurationMonths == selectedDuration);
+			Durations = Plans.Select(p => p.DurationMonths).Distinct().ToList();
+			// Force le rendu de la page après la mise à jour de l'état
+			await InvokeAsync(() => StateHasChanged());
+		}
+		catch (Exception ex)
+		{
+			Console.WriteLine($"Erreur lors du chargement des types : {ex.Message}");
+		}
+		finally
+		{
+			IsLoading = false; // Terminer le chargement, et permettre à la MudSelect de s'afficher
+			StateHasChanged(); // Cette ligne permet à Blazor de re-render le composant avec la nouvelle valeur
+		}
+	}
+	public void UpdatePrice()
+	{
+		var plan = Plans.FirstOrDefault(p =>
+			p.SubscriptionType.Name == subscriptionModel.SubscriptionType &&
+			p.DurationMonths == subscriptionModel.Duration);
+
+		Price = plan?.Price ?? 0;
+	}
+	public void SelectPlan(int duration, decimal price)
+	{
+		selectedDuration = duration;
+		subscriptionModel.Duration = duration;
+		Price = price;
+	}
+	public async Task BuyAsync()
+	{
+		if (subscriptionModel.Email != subscriptionModel.ConfirmEmail) return;
+
+		var plan = Plans.FirstOrDefault(p =>
+			p.SubscriptionType.Name == subscriptionModel.SubscriptionType &&
+			p.DurationMonths == subscriptionModel.Duration);
+
+		if (plan == null) return;
+
+		var response = await PlanService.PurchaseSubscriptionAsync(subscriptionModel.Email, plan.Id, true);
+
+		if (response.IsSuccessStatusCode)
+		{
+			Nav.NavigateTo("/success");
+		}
+		else
+		{
+			// Gérer l'erreur ici
+		}
+	}
+}

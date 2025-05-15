@@ -11,27 +11,42 @@ namespace API.Controllers
     public class SubscriptionController : ControllerBase
     {
         private readonly ISubscriptionService _subscriptionService;
-
-        public SubscriptionController(ISubscriptionService subscriptionService)
+        private readonly IEmailService _emailService;
+        public SubscriptionController(ISubscriptionService subscriptionService, IEmailService emailService)
         {
             _subscriptionService = subscriptionService;
+            _emailService = emailService;
         }
 
         [HttpPost("purchase")]
         public async Task<IActionResult> PurchaseSubscription([FromBody] SubscriptionRequest request)
         {
+            //if (!ModelState.IsValid)
+            //    return BadRequest(ModelState);
+
+            ////var paymentStatus = request.IsPaid ? PaymentStatus.Paid : PaymentStatus.Pending;
+            //var success = await _subscriptionService.PurchaseSubscription(request);
+
+            //if (success == -1)
+            //    return StatusCode(500, "Une erreur est survenue lors de l'achat.");
+            //_emailService.SendOrderEmailsAsync(success);
+            //return Ok(new { message = "Abonnement acheté avec succès!", subscriptionId = success });
+            return Ok();
+        }
+        [HttpPost("activate")]
+        public async Task<IActionResult> ActivateSubscription([FromBody] int subscriptionId, string accountMail, string accountPass)
+        {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var paymentStatus = request.IsPaid ? PaymentStatus.Paid : PaymentStatus.Pending;
-            var success = await _subscriptionService.PurchaseSubscription(request.Email, request.SubscriptionPlanId, paymentStatus);
+            //var paymentStatus = request.IsPaid ? PaymentStatus.Paid : PaymentStatus.Pending;
+            var success = await _subscriptionService.ActivateSubscription(subscriptionId);
 
             if (!success)
                 return StatusCode(500, "Une erreur est survenue lors de l'achat.");
-
+            _emailService.SendActivationEmailAsync(subscriptionId, accountMail, accountPass);
             return Ok(new { message = "Abonnement acheté avec succès!" });
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetAll()

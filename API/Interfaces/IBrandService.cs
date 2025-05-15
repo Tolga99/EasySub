@@ -7,5 +7,7 @@ namespace API.Interfaces
     {
         Task<List<Brand>> GetAllBrands();
         Task<Brand?> GetBrandById(int id);
+        Task<Brand?> GetBrandByName(string name);
+        Task<List<Brand>> GetByCategory(string category);
     }
 }

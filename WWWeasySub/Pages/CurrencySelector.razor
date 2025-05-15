@@ -1,0 +1,65 @@
+﻿@using WWWeasySub.Interfaces
+@using WWWeasySub.Models
+
+@using MudBlazor
+@inject ICurrencyService CurrencyService
+<div>
+    <MudSelect T="Currency"
+               @bind-Value="CurrencyService.SelectedCurrency"
+               Label="Devise"
+               Class="custom-white-select"
+               Dense="true"
+               DisableUnderline="true">
+    @foreach (var currency in CurrencyService.AvailableCurrencies)
+    {
+        <MudSelectItem Style="background-color:black;color: white" Value="@currency">@($"{currency.Code} - {currency.Symbol}")</MudSelectItem>
+    }
+</MudSelect>
+</div>
+<style>
+    .custom-white-select .mud-input-label,
+    .custom-white-select .mud-input-slot,
+    .custom-white-select .mud-select-input,
+    .custom-white-select .mud-popover,
+    .custom-white-select .mud-list-item {
+        color: white !important;
+    }
+
+    .custom-white-select .mud-select {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .custom-white-select .mud-list-item:hover {
+        background-color: #333333 !important;
+    }
+</style>
+@code{
+    private Currency? selectedCurrency;
+
+    protected override void OnInitialized()
+    {
+        selectedCurrency = CurrencyService.SelectedCurrency;
+        CurrencyService.OnCurrencyChanged += Refresh;
+    }
+
+    private void OnCurrencyChanged(ChangeEventArgs e)
+    {
+        var code = e.Value?.ToString();
+        var selected = CurrencyService.AvailableCurrencies.FirstOrDefault(c => c.Code == code);
+        if (selected != null)
+        {
+            CurrencyService.SelectedCurrency = selected;
+        }
+    }
+
+    private void Refresh()
+    {
+        selectedCurrency = CurrencyService.SelectedCurrency;
+        InvokeAsync(StateHasChanged);
+    }
+
+    public void Dispose()
+    {
+        CurrencyService.OnCurrencyChanged -= Refresh;
+    }
+}

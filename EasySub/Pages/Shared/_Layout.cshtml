@@ -7,23 +7,85 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/EasySub.styles.css" asp-append-version="true" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/style.css">
+    <link rel="stylesheet" href="~/css/vars.css">
+
+
+    <style>
+        a,
+        button,
+        input,
+        select,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            border: none;
+            text-decoration: none;
+            background: none;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        menu, ol, ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <MudThemeProvider />
+
+    <header style="display:flex">
+        <div style="    align-items: center;
+    display: flex
+;
+    padding: 20px 20px;
+    width: 15%;">
+            <img src="/images/swift0.png" />
+
+            <a style="  color: #ffffff;
+               text-align: left;
+               font-family: 'Poppins-Medium' , sans-serif;
+               font-size: 16px;
+               line-height: 118.2%;
+               letter-spacing: -0.03em;
+               font-weight: 500;">Save Pass</a>
+        </div>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px;
+    height: 40px;
+    left: 35%;
+    translate: -50%;
+    width: 85%;
+    max-width: 600px;
+    min-width: 300px;
+    margin-top: 10px;">
+
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">EasySub</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link nav-text" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link nav-text" asp-area="" asp-page="/Privacy">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-text" asp-area="" asp-page="/Privacy">Support</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link nav-text" asp-area="" asp-page="/Privacy">About Us</a>
                         </li>
                     </ul>
                 </div>

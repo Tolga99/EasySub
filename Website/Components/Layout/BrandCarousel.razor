@@ -1,0 +1,52 @@
+﻿@using Website.Interfaces
+@using Website.Models
+@inject IBrandService BrandService
+
+<div class="carousel-container">
+    <h2 class="carousel-title">@Title</h2>
+
+    @if (Brands is null)
+    {
+        <p class="text-white">Chargement...</p>
+    }
+    else if (!Brands.Any())
+    {
+        <p class="text-white">Aucune marque trouvée.</p>
+    }
+    else
+    {
+        @foreach (var brand in Brands)
+        {
+            <div class="carousel-item">
+            <a href="/subscription/@brand.Name">
+                <img class="carousel-image" src="data:image/png;base64,@Convert.ToBase64String(brand.ImageData!)"
+                     alt="@brand.Name" />
+                <p class="carousel-item-name">@brand.Name</p>
+                </a>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public string Category { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; } = string.Empty;
+
+    private List<Brand>? Brands;
+
+    // Cette méthode sera appelée chaque fois que le paramètre "Category" change
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            // Appel au service pour récupérer les brands selon la catégorie
+            Brands = await BrandService.GetBrandsByCategoryAsync(Category);
+        }
+        catch (Exception ex)
+        {
+            // Gérer l'exception et afficher un message d'erreur
+            Brands = new();
+            Console.WriteLine($"Erreur lors du chargement des marques: {ex.Message}");
+        }
+    }
+}

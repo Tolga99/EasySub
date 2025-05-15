@@ -1,0 +1,287 @@
+﻿@page "/"
+@using MudBlazor
+@using System.Text.Json
+@using System.Globalization
+@using WMBlazorSlickCarousel.WMBSC
+@using WWWeasySub.Interfaces
+@using WWWeasySub.Layout
+@using WWWeasySub.Models
+@inject NavigationManager Nav
+@inject Microsoft.Extensions.Localization.IStringLocalizer<App> Localize
+@inject HttpClient Http
+@inject ILocalizationService Localization
+@inject ICurrencyService CurrencyService
+@inject NavigationManager Nav
+@inject IJSRuntime JS
+
+<PageTitle>@Localize["Home"]</PageTitle>
+<div class="container">
+	<div class="col-12 col-md-6 mb-4" style="
+    padding-bottom: 130px; margin:75px ">
+		<div class="home-display" style="  color: #ffffff;
+  text-align: left;
+  font-family: 'BricolageGrotesque-Bold', sans-serif;
+         font-size: 20px;
+         line-height: 73px;
+         letter-spacing: 0.01em;
+         font-weight: 700;
+         display: flex;
+         align-items: center;
+         justify-content: flex-start; font-size: 25px;">
+			<img style="opacity: 0.53;
+    height: auto;
+    position: absolute;
+    position-area: center;
+    margin-bottom: 25%;
+    overflow: visible;" src="/images/group-30.svg">
+			<img src="/images/get-revenue0.png" style="margin-right: 10px;">
+			@Localize["PayLessEnjoyMore"]
+		</div>
+		<div class="home-display" style="    margin: 40px 0px 35px 0px;">
+			<span style="  color: #ffffff;
+  font-family: 'BricolageGrotesque-Bold', sans-serif;
+  font-size: 60px;
+  line-height: 73px;
+  letter-spacing: 0.01em;
+  font-weight: 700;">
+				Vos abonnements et logiciels aux
+			</span>
+			<span style="  background: linear-gradient(
+    180deg,
+    rgba(93, 52, 197, 1) 1.9999999552965164%,
+    rgba(147, 130, 229, 1) 50.30980706214905%,
+    rgba(93, 52, 197, 1) 100%
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: 'BricolageGrotesque-Bold', sans-serif;
+              font-size: 60px;
+              line-height: 73px;
+              letter-spacing: 0.01em;
+              font-weight: 700;">meilleurs</span>
+			<span style="  color: #ffffff;
+  font-family: 'BricolageGrotesque-Bold', sans-serif;
+  font-size: 60px;
+  line-height: 73px;
+  letter-spacing: 0.01em;
+  font-weight: 700;">
+				prix
+				<br />
+			</span>
+		</div>
+		<div>
+			<div style="  text-align: left;
+  font-family: 'BricolageGrotesque-Bold', sans-serif;
+  font-size: 60px;
+  line-height: 73px;
+  letter-spacing: 0.01em;
+  font-weight: 700;">
+			</div>
+			<div class="home-display" style="  text-align: left;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;
+  align-self: stretch;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;">
+				<span>
+					<span style="  color: #ffffff;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+					  font-size: 20px;
+					  line-height: 27px;
+					  font-weight: 400;">
+						Accédez
+					</span>
+					<span style="  color: #b5a8ed;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;">
+						facilement
+					</span>
+					<span style="  color: #ffffff;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;">
+						à vos services préférés à prix
+					</span>
+					<span style="  color: #b5a8ed;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;">
+						réduits
+					</span>
+					<span style="  color: #ffffff;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;">
+						grâce a
+					</span>
+					<span style="  color: #b5a8ed;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;">
+						SavePass
+					</span>
+					<span style="  color: #ffffff;
+  font-family: 'HostGrotesk-Regular', sans-serif;
+  font-size: 20px;
+  line-height: 27px;
+  font-weight: 400;">
+						!
+					</span>
+				</span>
+			</div>
+			<div class="home-display" style="margin: 20px 0px 20px 0px;">
+				<div class="frame-crypto">
+					<span style="color: #ffffff;
+    text-align: center;
+    font-family: 'Inter-Regular', sans-serif;
+				  font-size: 12px;
+				  line-height: 95%;
+				  letter-spacing: -0.03em;
+				  font-weight: 400;">@Localize["WeAcceptCryptos"]</span>
+					<img class="img-crypto" src="/images/cry1.png" />
+					<img class="img-crypto" src="/images/cry2.png" />
+					<img class="img-crypto" src="/images/cry3.png" />
+					<img class="img-crypto" src="/images/cry4.png" />
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="center-line"></div>
+
+	<div class="row" style="    place-items: center;">
+		<span style="font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 40px;
+    line-height: 75px;
+    font-weight: 700;
+    color: white;">@Localize["Trends"]</span>
+
+		<div>
+			<BrandCarousel Category="Tendances" Title="Les Tendances" />
+		</div>
+	</div>
+	<div class="row" style="    place-items: center;">
+		<span style="font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 40px;
+    line-height: 75px;
+    font-weight: 700;
+    color: white;">@Localize["Audio"]</span>
+
+		<div>
+			<BrandCarousel Category="Audio" Title="Audio" />
+		</div>
+	</div>
+	<div class="row" style="    place-items: center;">
+		<span style="font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 40px;
+    line-height: 75px;
+    font-weight: 700;
+    color: white;">@Localize["VOD"]</span>
+
+		<div>
+			<BrandCarousel Category="VOD" Title="VOD" />
+		</div>
+	</div>
+	<div class="row" style="    place-items: center;">
+		<span style="font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 40px;
+    line-height: 75px;
+    font-weight: 700;
+    color: white;">@Localize["Gaming"]</span>
+
+		<div>
+			<BrandCarousel Category="Gaming" Title="Gaming" />
+		</div>
+	</div>
+
+</div>
+@code {
+
+	void GoToSubscription()
+	{
+		Nav.NavigateTo("/subscription/netflix");
+	}
+
+	protected override async Task OnInitializedAsync()
+	{
+		try
+		{
+			var response = await Http.GetStringAsync("https://ipapi.co/json/");
+			var geo = JsonSerializer.Deserialize<GeoInfo>(response, new JsonSerializerOptions
+				{
+					PropertyNameCaseInsensitive = true
+				});
+			if(geo is not null)
+			{
+				var regionCode = geo.Region_Code?.ToUpper() ?? "";
+				var countryCode = geo.Country_Code ?? "US";
+				var currency = geo.Currency ?? "USD";
+
+				// Langue principale
+				var mainLang = regionCode switch
+				{
+					"WAL" => "fr",
+					"VLG" => "nl",
+					"BRU" => "fr", // ou "nl" selon préférence
+					_ => "en"
+				};
+
+				var cultureCode = (mainLang, countryCode) switch
+				{
+					("fr", _) => "fr-FR",
+					("nl", "BE") => "nl-BE",
+					("de", "DE") => "de-DE",
+					("en", "BE") => "en-US",
+					("en", _) => "en-US",
+					_ => "en-US"
+				};
+
+				// // Ne pas écraser si l'utilisateur a déjà choisi une culture
+				// var cultureInStorage = await JS.InvokeAsync<string>("blazorCulture.get");
+
+				// if (string.IsNullOrWhiteSpace(cultureInStorage))
+				// {
+				// 	await JS.InvokeVoidAsync("blazorCulture.set", cultureCode);
+				// 	Nav.NavigateTo(Nav.Uri, forceLoad: true);
+				// 	return;
+				// }
+
+				// Appliquer manuellement si tu veux l'utiliser localement
+				Localization.SetCulture(cultureCode);
+				await JS.InvokeVoidAsync("blazorCulture.set", cultureCode);
+
+				Localization.CurrencySymbol = currency switch
+				{
+					"EUR" => "€",
+					"USD" => "$",
+					"GBP" => "£",
+					_ => currency
+				};
+
+				var selectedCurrency = CurrencyService.AvailableCurrencies
+					.FirstOrDefault(a => a.Code.ToUpper() == geo?.Currency?.ToUpper());
+
+				if (selectedCurrency != null)
+				{
+					CurrencyService.SelectedCurrency = selectedCurrency;
+				}
+
+				StateHasChanged();
+			}
+		}
+		catch
+		{
+			Localization.SetCulture("en-US");
+			Localization.CurrencySymbol = "$";
+		}
+	}
+}

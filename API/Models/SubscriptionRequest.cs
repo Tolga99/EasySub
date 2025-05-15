@@ -1,10 +1,25 @@
-﻿namespace API.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace API.Models
 {
     public class SubscriptionRequest
     {
+        [Required]
+        public string OrderId { get; set; } = string.Empty;
+        [Required]
+        [EmailAddress]
         public string Email { get; set; } = string.Empty;
-        public int SubscriptionPlanId { get; set; } // 🔗 On passe maintenant l’ID du plan
-        public bool IsPaid { get; set; }
+
+        [Required]
+        [EmailAddress]
+        [Compare("Email", ErrorMessage = "Les emails ne correspondent pas.")]
+        public string ConfirmEmail { get; set; } = string.Empty;
+
+        [Required]
+        public string PaymentMethod { get; set; } = string.Empty;
+
+        [Required]
+        public int SubscriptionPlanId { get; set; }
     }
 
 

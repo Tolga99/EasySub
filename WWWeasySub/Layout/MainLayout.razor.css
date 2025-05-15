@@ -1,0 +1,195 @@
+.page {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+
+.sidebar {
+    background-image: linear-gradient(180deg, rgb(5, 39, 103) 0%, #3a0647 70%);
+}
+
+.top-row {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d6d5d5;
+    justify-content: flex-end;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+    .top-row ::deep a, .top-row ::deep .btn-link {
+        white-space: nowrap;
+        margin-left: 1.5rem;
+        text-decoration: none;
+    }
+
+        .top-row ::deep a:hover, .top-row ::deep .btn-link:hover {
+            text-decoration: underline;
+        }
+
+        .top-row ::deep a:first-child {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+@media (max-width: 640.98px) {
+    .top-row {
+        justify-content: space-between;
+    }
+
+        .top-row ::deep a, .top-row ::deep .btn-link {
+            margin-left: 0;
+        }
+}
+
+@media (min-width: 641px) {
+    .page {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 250px;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    .top-row {
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+        .top-row.auth ::deep a:first-child {
+            flex: 1;
+            text-align: right;
+            width: 0;
+        }
+
+    .top-row, article {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+.nav-text {
+    color: #ffffff !important;
+    text-align: center;
+    font-family: 'HostGrotesk-Regular', sans-serif;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+.center-line {
+    width: 80%; /* Ajuste selon la largeur souhaitée */
+    height: 1px; /* Épaisseur de la ligne */
+    background: linear-gradient(to right, transparent, white, transparent);
+    place-self: center;
+}
+
+
+:deep(.home-display) {
+    width: 65%;
+    justify-self: center;
+}
+
+:deep(.sub-length) {
+    color: #000000;
+    font-family: "Inter-ExtraBold", sans-serif;
+    font-size: 21px;
+    letter-spacing: 0.04em;
+    font-weight: 900;
+}
+
+:deep(.sub-price) {
+    color: #4a1bbf;
+    font-family: "Inter-Bold", sans-serif;
+    font-size: 25px;
+    letter-spacing: 0.04em;
+    font-weight: 700;
+}
+
+:deep(.sub-price-by-month) {
+    color: #4a1bbf;
+    font-family: "Inter-SemiBold", sans-serif;
+    font-size: 15px;
+    letter-spacing: 0.04em;
+    font-weight: 600;
+}
+
+/*:deep(.sub-card) {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 165px;
+    height: 205px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(128, 0, 255, 0.4);*/ /* léger effet au repos */
+/*}*/
+
+:deep(.select-sub) {
+    background: linear-gradient(90deg, #6e00ff, #bb00ff);
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    width: 147px;
+    height: 24px;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+:deep(.sub-card) {
+    background: #ffffff;
+    border-radius: 20px;
+    width: 165px;
+    height: 205px;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+:deep(.sub-card:hover) {
+    box-shadow: 0 0 15px rgba(128, 0, 255, 0.5);
+}
+
+:deep(.sub-card.selected) {
+    border: 2px solid #e588ff;
+    box-shadow: 0 0 10px #e588ff;
+}
+:deep(.checkout-sub) {
+    background: linear-gradient(90deg, #6e00ff, #bb00ff);
+    padding: 6px 12px;
+    border-radius: 20px;
+    width: 200px;
+    height: 35px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 600;
+}

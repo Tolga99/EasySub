@@ -13,6 +13,7 @@ namespace API.Data
         public DbSet<Brand> Brands { get; set; }  // ✅ Ajout de Brand
         public DbSet<SubscriptionType> SubscriptionTypes { get; set; }  // ✅ Ajout de SubscriptionType
         public DbSet<Account> Accounts { get; set; }
+        public DbSet<PromoCode> PromoCodes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -59,6 +60,14 @@ namespace API.Data
                 .WithMany()
                 .HasForeignKey(sp => sp.SubscriptionTypeId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<PromoCode>(entity =>
+            {
+                entity.HasKey(p => p.Id);
+                entity.Property(p => p.Code).IsRequired().HasMaxLength(50);
+                entity.Property(p => p.DiscountPercentage).IsRequired();
+                entity.Property(p => p.ExpirationDate).IsRequired();
+            });
         }
     }
 }

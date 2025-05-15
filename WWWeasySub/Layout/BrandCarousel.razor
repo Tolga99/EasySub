@@ -1,0 +1,88 @@
+﻿@using WWWeasySub.Interfaces
+@using WWWeasySub.Models
+@inject IBrandService BrandService
+@using WMBlazorSlickCarousel.WMBSC
+@inject Microsoft.Extensions.Localization.IStringLocalizer<App> Localize
+
+<div class="carousel-container">
+@*     <h2 class="carousel-title">@Title</h2>
+ *@
+    @if (Brands is null)
+    {
+        <p class="text-white">@Localize["Loading..."]</p>
+    }
+    else if (!Brands.Any())
+    {
+        <p class="text-white">@Localize["NoBrandFound"]</p>
+    }
+    else
+    {
+        @foreach (var brand in Brands)
+        {
+            <div class="carousel-item" style="    margin: 0px 80px 0px 5px;">
+            <a href="/subscription/@brand.Name">
+@*                 <img class="carousel-image" src="data:image/png;base64,@Convert.ToBase64String(brand.ImageData!)"
+                     alt="@brand.Name" /> *@
+                    @{
+                        var imageSrc = brand.ImageData != null && brand.ImageData.Length > 0
+                        ? $"data:image/png;base64,{Convert.ToBase64String(brand.ImageData)}"
+                        : "/logos/youtube.svg"; // <- mets ici ton image par défaut
+                    }
+                    <img class="img-fluid" src="@imageSrc" alt="@brand.Name" />
+                <p class="carousel-item-name">@brand.Name</p>
+                </a>
+            </div>
+        }
+    }
+</div>
+@* <BlazorSlickCarousel @ref="theCarousel" Configurations="configurations">
+	<BlazorSlickCarouselContent>
+        @if (Brands is null)
+        {
+            <p class="text-white">Chargement...</p>
+        }
+        else if (!Brands.Any())
+        {
+            <p class="text-white">Aucune marque trouvée.</p>
+        }
+        else
+        {
+            @foreach (var brand in Brands)
+            {
+                <div>
+                    <a href="/subscription/@brand.Name">
+                        @{
+                            var imageSrc = brand.ImageData != null && brand.ImageData.Length > 0
+                            ? $"data:image/png;base64,{Convert.ToBase64String(brand.ImageData)}"
+                            : "/images/netflix-logo-png-2574-10.png"; // <- mets ici ton image par défaut
+                        }
+                        <img src="@imageSrc" alt="@brand.Name" />
+                        <p class="carousel-item-name" style="    justify-self: center;">@brand.Name</p>
+                    </a>
+                </div>
+            }
+        }
+	</BlazorSlickCarouselContent>
+</BlazorSlickCarousel> *@
+@code {
+    [Parameter] public string Category { get; set; } = string.Empty;
+    [Parameter] public string Title { get; set; } = string.Empty;
+
+    private List<Brand>? Brands;
+
+    // Cette méthode sera appelée chaque fois que le paramètre "Category" change
+    protected override async Task OnParametersSetAsync()
+    {
+        try
+        {
+            // Appel au service pour récupérer les brands selon la catégorie
+            Brands = await BrandService.GetBrandsByCategoryAsync(Category);
+        }
+        catch (Exception ex)
+        {
+            // Gérer l'exception et afficher un message d'erreur
+            Brands = new();
+            Console.WriteLine($"Erreur lors du chargement des marques: {ex.Message}");
+        }
+    }
+}

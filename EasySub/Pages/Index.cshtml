@@ -1,10 +1,11 @@
 ﻿@page
+@using MudBlazor
 @model IndexModel
 @{
-    ViewData["Title"] = "Accueil - Subeasy";
-}
+	ViewData["Title"] = "Accueil - Subeasy";
 
-<h1>Bienvenue sur Subeasy</h1>
+}
+@* <h1>Bienvenue sur Subeasy</h1>
 <p>Découvrez nos abonnements à prix réduits.</p>
 
 <ul>
@@ -14,4 +15,313 @@
             <a href="/Subscription?brandId=@brand.Id">@brand.Name</a>
         </li>
     }
-</ul>
+</ul> *@
+
+@* Ligne *@
+
+<div class="way" style="color: white;">
+	<span>
+		<span class="way-text">Home &gt;</span>
+		<span class="way-text"></span>
+		<span class="way-text">Abonnements &gt;</span>
+		<span class="way-text"></span>
+		<span class="way-text">Netflix</span>
+	</span>
+</div>
+
+
+<div style="display:flex">
+	<div style="width: 50%;
+  border-radius: 20px;    background-color: #2b1f38;">
+		<div style="    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 32px;
+    line-height: 73px;
+    font-weight: 700;
+    color: white;
+    text-align: center;">
+			Netflix
+		</div>
+		<div style="    text-align: center;">
+			<img style="  width: 277px;
+  height: 277px;" src="/images/netflix-logo-png-2574-10.png" />
+		</div>
+		<div style="display:flex;    place-content: space-between;
+">
+			<div style="  background: #ffffff;
+  border-radius: 20px;
+  width: 165px;
+  height: 205px;"></div>
+			<div style="  background: #ffffff;
+  border-radius: 20px;
+  width: 165px;
+  height: 205px;"></div>
+			<div style="  background: #ffffff;
+  border-radius: 20px;
+  width: 165px;
+  height: 205px;"></div>
+		</div>
+	</div>
+	<div style="width: 50%;
+    border-radius: 20px;
+    background-color: #2b1f38;
+    display: flow;">
+		<div style="font-family: ' Inter-Bold', sans-serif;
+    font-size: 28px;
+    line-height: 73px;
+    width: 100%;
+    display: flex
+;
+    place-content: center;
+    height: 50%;">
+			<a>12 months - Premium (4k)</a>
+@* 			<MudNumericField @bind-Value ="IntValue" Label="Outlined" Variant="Variant.Outlined" Max="5" />
+ *@
+		</div>
+		<div style="    width: 50%;
+    display: flex
+;
+    border-radius: 20px;
+    background-color: #2b1f38;
+    height: 50%;">
+			<div style="    font-family: ' Inter-Bold', sans-serif;
+    font-size: 28px;
+    line-height: 73px;
+    width: 100%;
+    display: flex
+;
+    place-content: center;
+">
+				<a>Payments methods</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="payments-methods">Payments methods</div>
+
+	<div class="_34-99">34.99€</div>
+	<img class="money-box" src="money-box0.png" />
+	<div class="vous-conomisez-12-avec-save-pass">
+		<span>
+			<span class="vous-conomisez-12-avec-save-pass-span">Vous économisez</span>
+			<span class="vous-conomisez-12-avec-save-pass-span2">12€</span>
+			<span class="vous-conomisez-12-avec-save-pass-span3">avec Save Pass</span>
+		</span>
+	</div>
+	<img class="in-transit" src="in-transit0.png" />
+	<div class="livraison-24-48-h">Livraison 24-48h</div>
+	<div class="rectangle-129"></div>
+	<div class="quantity">Quantity</div>
+	<div class="_1">1</div>
+	<img class="plus-math" src="plus-math0.png" />
+	<img class="subtract" src="subtract0.png" />
+	<div class="rectangle-1292"></div>
+	<div class="type">Type</div>
+	<div class="premium-4-k">Premium 4K</div>
+	<div class="products-page-sans-groups">
+		<div class="tendances">Tendances</div>
+		<div class="rectangle-322"></div>
+		<div class="rectangle-324"></div>
+		<div class="rectangle-323"></div>
+		<div class="rectangle-278"></div>
+		<div class="rectangle-279"></div>
+		<div class="rectangle-280"></div>
+		<div class="rectangle-281"></div>
+		<div class="rectangle-2812"></div>
+		<div class="rectangle-282"></div>
+		<img class="chevron-right" src="chevron-right0.png" />
+		<img class="mask-group" src="mask-group0.svg" />
+		<div class="rectangle-325"></div>
+		<img class="up-left" src="up-left0.png" />
+		<div class="suo-diutius-sumus-sunt-in-et-non-quidem-intractato-quae-quin-quam-illae-res-et">
+			Suo diutius sumus sunt in et non quidem intractato quae quin quam illae res
+			et.
+		</div>
+		<div class="line-7"></div>
+		<img class="up-left2" src="up-left1.png" />
+		<div class="suo-diutius-sumus-sunt-in-et-non-quidem-intractato-quae-quin-quam-illae-res-et2">
+			Suo diutius sumus sunt in et non quidem intractato quae quin quam illae res
+			et.
+		</div>
+		<div class="line-72"></div>
+		<img class="up-left3" src="up-left2.png" />
+		<div class="suo-diutius-sumus-sunt-in-et-non-quidem-intractato-quae-quin-quam-illae-res-et3">
+			Suo diutius sumus sunt in et non quidem intractato quae quin quam illae res
+			et.
+		</div>
+		<div class="line-73"></div>
+		<img class="up-left4" src="up-left3.png" />
+		<div class="suo-diutius-sumus-sunt-in-et-non-quidem-intractato-quae-quin-quam-illae-res-et4">
+			Suo diutius sumus sunt in et non quidem intractato quae quin quam illae res
+			et.
+		</div>
+		<div class="line-74"></div>
+		<img class="up-left5" src="up-left4.png" />
+		<div class="suo-diutius-sumus-sunt-in-et-non-quidem-intractato-quae-quin-quam-illae-res-et5">
+			Suo diutius sumus sunt in et non quidem intractato quae quin quam illae res
+			et.
+		</div>
+		<img class="image-7" src="image-70.png" />
+		<div class="hero-text">FAQ</div>
+
+		<div class="rectangle-2822"></div>
+		<div class="rectangle-128"></div>
+		<div class="rectangle-283"></div>
+		<div class="rectangle-284"></div>
+		<div class="rectangle-285"></div>
+
+		<img class="chevron-down" src="chevron-down0.png" />
+		<div class="_54-99">54.99€</div>
+		<img class="vector-88" src="vector-880.svg" />
+		<img class="mask-group2" src="mask-group1.svg" />
+		<div class="rectangle-330"></div>
+		<div class="_1-mois">1 MOIS</div>
+		<div class="_3-99">3.99€</div>
+		<div class="_3-99-mois">
+			<span>
+				<span class="_3-99-mois-span">3.99€</span>
+				<span class="_3-99-mois-span2">/ mois</span>
+			</span>
+		</div>
+		<div class="vous-conomisez-2">Vous économisez 2€</div>
+		<div class="vous-conomisez-2">Vous économisez 2€</div>
+		<img class="check-mark" src="check-mark0.png" />
+		<div class="rectangle-1282"></div>
+		<div class="shopping-basket"></div>
+		<div class="s-lectionner">Sélectionner</div>
+		<div class="rectangle-331"></div>
+		<div class="_12-mois">12 MOIS</div>
+		<div class="_3-992">3.99€</div>
+		<div class="_3-99-mois2">
+			<span>
+				<span class="_3-99-mois-2-span">3.99€</span>
+				<span class="_3-99-mois-2-span2">/ mois</span>
+			</span>
+		</div>
+		<div class="vous-conomisez-22">Vous économisez 2€</div>
+		<img class="check-mark2" src="check-mark1.png" />
+		<div class="rectangle-1283"></div>
+		<div class="shopping-basket2"></div>
+		<div class="s-lectionner2">Sélectionner</div>
+		<div class="rectangle-3303"></div>
+		<div class="_3-mois">3 MOIS</div>
+		<div class="_3-993">3.99€</div>
+		<div class="_3-99-mois3">
+			<span>
+				<span class="_3-99-mois-3-span">3.99€</span>
+				<span class="_3-99-mois-3-span2">/ mois</span>
+			</span>
+		</div>
+		<div class="vous-conomisez-23">Vous économisez 2€</div>
+		<img class="check-mark3" src="check-mark2.png" />
+		<div class="rectangle-1284"></div>
+		<div class="shopping-basket3"></div>
+		<div class="s-lectionner3">Sélectionner</div>
+		<div class="_5-99">5.99€</div>
+		<div class="original">Original</div>
+		<div class="_5-992">5.99€</div>
+		<div class="original2">Original</div>
+		<div class="_5-993">5.99€</div>
+		<div class="original3">Original</div>
+
+		<div class="ce-que-nos-clients-en-pensent">Ce que nos clients en pensent</div>
+		<div class="comment-save-pass-fonctionne">Comment Save Pass fonctionne?</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas-perquam-sagax-is-in-brittanniam-missus-ut-militares-quosdam-perduceret-ausos-conspirasse-magnentio-cum-reniti-non-possent-iussa-licentius-supergressus-fluminis-modo-fortunis-conplurium-sese-repentinus">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas perquam sagax. is in
+			Brittanniam missus ut militares quosdam perduceret ausos conspirasse
+			Magnentio, cum reniti non possent, iussa licentius supergressus fluminis
+			modo fortunis conplurium sese repentinus
+		</div>
+		<div class="rectangle-337"></div>
+		<div class="rectangle-338"></div>
+		<div class="rectangle-339"></div>
+		<img class="rectangle-329" src="rectangle-3290.svg" />
+
+		<div class="line-75"></div>
+		<div class="rectangle-340"></div>
+		<img class="star-6" src="star-60.svg" />
+		<img class="star-7" src="star-70.svg" />
+		<img class="star-8" src="star-80.svg" />
+		<img class="star-9" src="star-90.svg" />
+		<img class="star-10" src="star-100.svg" />
+		<div class="super-conomies">Super économies</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas-perquam-sagax-is-in-brittanniam-missus-ut-militares-quosdam-perduceret-ausos-conspirasse-magnentio-cum-reniti-non-possent">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas perquam sagax. is in
+			Brittanniam missus ut militares quosdam perduceret ausos conspirasse
+			Magnentio, cum reniti non possent,
+		</div>
+		<div class="o-tolga">O. Tolga</div>
+		<div class="rectangle-3402"></div>
+		<img class="star-62" src="star-61.svg" />
+		<img class="star-72" src="star-71.svg" />
+		<img class="star-82" src="star-81.svg" />
+		<img class="star-92" src="star-91.svg" />
+		<img class="star-102" src="star-101.svg" />
+		<div class="super-conomies2">Super économies</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas-perquam-sagax-is-in-brittanniam-missus-ut-militares-quosdam-perduceret-ausos-conspirasse-magnentio-cum-reniti-non-possent2">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas perquam sagax. is in
+			Brittanniam missus ut militares quosdam perduceret ausos conspirasse
+			Magnentio, cum reniti non possent,
+		</div>
+		<div class="o-tolga2">O. Tolga</div>
+		<div class="rectangle-3403"></div>
+		<img class="star-63" src="star-62.svg" />
+		<img class="star-73" src="star-72.svg" />
+		<img class="star-83" src="star-82.svg" />
+		<img class="star-93" src="star-92.svg" />
+		<img class="star-103" src="star-102.svg" />
+		<div class="super-conomies3">Super économies</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas-perquam-sagax-is-in-brittanniam-missus-ut-militares-quosdam-perduceret-ausos-conspirasse-magnentio-cum-reniti-non-possent3">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas perquam sagax. is in
+			Brittanniam missus ut militares quosdam perduceret ausos conspirasse
+			Magnentio, cum reniti non possent,
+		</div>
+		<div class="o-tolga3">O. Tolga</div>
+		<div class="rectangle-3404"></div>
+		<img class="star-64" src="star-63.svg" />
+		<img class="star-74" src="star-73.svg" />
+		<img class="star-84" src="star-83.svg" />
+		<img class="star-94" src="star-93.svg" />
+		<img class="star-104" src="star-103.svg" />
+		<div class="super-conomies4">Super économies</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas-perquam-sagax-is-in-brittanniam-missus-ut-militares-quosdam-perduceret-ausos-conspirasse-magnentio-cum-reniti-non-possent4">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas perquam sagax. is in
+			Brittanniam missus ut militares quosdam perduceret ausos conspirasse
+			Magnentio, cum reniti non possent,
+		</div>
+		<div class="o-tolga4">O. Tolga</div>
+		<div class="rectangle-3405"></div>
+		<img class="star-65" src="star-64.svg" />
+		<img class="star-75" src="star-74.svg" />
+		<img class="star-85" src="star-84.svg" />
+		<img class="star-95" src="star-94.svg" />
+		<img class="star-105" src="star-104.svg" />
+		<div class="super-conomies5">Super économies</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas-perquam-sagax-is-in-brittanniam-missus-ut-militares-quosdam-perduceret-ausos-conspirasse-magnentio-cum-reniti-non-possent5">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas perquam sagax. is in
+			Brittanniam missus ut militares quosdam perduceret ausos conspirasse
+			Magnentio, cum reniti non possent,
+		</div>
+		<div class="o-tolga5">O. Tolga</div>
+		<div class="rectangle-3406"></div>
+		<img class="star-66" src="star-65.svg" />
+		<img class="star-76" src="star-75.svg" />
+		<img class="star-86" src="star-85.svg" />
+		<img class="star-96" src="star-95.svg" />
+		<img class="star-106" src="star-105.svg" />
+		<div class="super-conomies6">Super économies</div>
+		<div class="inter-quos-paulus-eminebat-notarius-ortus-in-hispania-glabro-quidam-sub-vultu-latens-odorandi-vias-periculorum-occultas">
+			Inter quos Paulus eminebat notarius ortus in Hispania, glabro quidam sub
+			vultu latens, odorandi vias periculorum occultas
+		</div>
+		<div class="o-tolga6">O. Tolga</div>
+		<img class="vector-89" src="vector-890.svg" />
+		<img class="vector-90" src="vector-900.svg" />
+	</div>
+	
+

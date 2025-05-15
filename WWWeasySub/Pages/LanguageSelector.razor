@@ -1,0 +1,91 @@
+﻿@using System.Globalization
+@using Microsoft.AspNetCore.Components;
+@using Microsoft.JSInterop;
+@using MudBlazor
+@inject IStringLocalizer<App> Localizer
+@inject NavigationManager Navigation
+@inject IJSRuntime JS
+
+<div >
+    <MudSelect T="CultureInfo"
+    @bind-Value="SelectedCulture"
+    Label="Langue"
+    Class="custom-white-select"
+    Dense="true"
+    DisableUnderline="true">
+        @foreach (var culture in cultures)
+        {
+            <MudSelectItem T="CultureInfo"
+            Value="@culture"
+            Style="background-color:black; color:white;">
+                @culture.DisplayName
+            </MudSelectItem>
+        }
+    </MudSelect>
+</div>
+
+
+@code {
+    [Inject] public NavigationManager? NavManager { get; set; }
+    [Inject] public IJSRuntime? JSRuntime { get; set; }
+
+    private CultureInfo[] cultures = new[]
+    {
+        new CultureInfo("fr-FR"),
+        new CultureInfo("en-US"),
+        new CultureInfo("nl-NL")
+    };
+
+    private CultureInfo? selectedCulture;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if(JSRuntime is not null)
+        {
+            var cultureName = await JSRuntime.InvokeAsync<string>("blazorCulture.get");
+            if (!string.IsNullOrEmpty(cultureName))
+            {
+                selectedCulture = new CultureInfo(cultureName);
+            }
+            else
+            {
+                selectedCulture = CultureInfo.CurrentCulture;
+            }
+        }
+    }
+
+    private CultureInfo SelectedCulture
+    {
+        get => selectedCulture ?? new CultureInfo("fr-FR");
+        set
+        {
+            if(JSRuntime is not null && NavManager is not null)
+            {
+                if (selectedCulture?.Name != value.Name)
+                {
+                    selectedCulture = value;
+                    var js = (IJSInProcessRuntime)JSRuntime;
+                    js.InvokeVoid("blazorCulture.set", value.Name);
+                    NavManager.NavigateTo(NavManager.Uri, forceLoad: true);
+                }
+            }
+        }
+    }
+}
+<style>
+    .custom-white-select .mud-input-label,
+    .custom-white-select .mud-input-slot,
+    .custom-white-select .mud-select-input,
+    .custom-white-select .mud-popover,
+    .custom-white-select .mud-list-item {
+        color: white !important;
+    }
+
+    .custom-white-select .mud-select {
+        background-color: rgba(255, 255, 255, 0.1) !important;
+    }
+
+    .custom-white-select .mud-list-item:hover {
+        background-color: #333333 !important;
+    }
+</style>

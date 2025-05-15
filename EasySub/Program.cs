@@ -1,5 +1,6 @@
 using EasySub.Interfaces;
 using EasySub.Services;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,7 @@ builder.Services.AddHttpClient();
 builder.Services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ISubscriptionPlanService, SubscriptionPlanService>();
+builder.Services.AddMudServices();
 
 builder.Services.AddSingleton<EmailService>(); // Charge automatiquement depuis appsettings.json
 

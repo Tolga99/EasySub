@@ -1,0 +1,17 @@
+﻿@* @using MudBlazor
+
+<MudDialog MaxWidth="MaxWidth.ExtraSmall" FullWidth="true">
+    <DialogContent>
+        <MudPaper Class="pa-4" Style="text-align:center;">
+            <MudIcon Icon="@Icons.Material.Filled.CheckCircle" Size="60px" Color="Color.Success" />
+            <MudText Typo="Typo.h5" Class="mt-2" Color="Color.Success">Succès !</MudText>
+            <MudText Typo="Typo.body1" Class="mt-1">
+                Votre action a bien été enregistrée.
+            </MudText>
+        </MudPaper>
+    </DialogContent>
+    <DialogActions Class="justify-center">
+        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="() => MudDialog.Close()">Fermer</MudButton>
+    </DialogActions>
+</MudDialog>
+ *@

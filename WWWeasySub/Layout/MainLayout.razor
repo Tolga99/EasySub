@@ -1,0 +1,70 @@
+﻿@using WWWeasySub.Interfaces
+@using WWWeasySub.Pages
+@inherits LayoutComponentBase
+@inject Microsoft.Extensions.Localization.IStringLocalizer<App> Localize
+@inject ICurrencyService CurrencyService
+
+<div class="page" style="display:block;height:100%;">
+	<main style="height:100%;">
+		<div class="row" style="width:100%; place-content: flex-start; background-color: #0f001b !important;">
+			<div class="col-6 col-md-3 d-flex align-items-center">
+				<img src="/images/swift0.png" style="margin-right:10px" />
+				<a style="color: #ffffff; text-align: left; font-family: 'Poppins-Medium', sans-serif; font-size: 24px; line-height: 118.2%; letter-spacing: -0.03em; font-weight: 500;">Save Pass</a>
+			</div>
+            <div class="col-12 col-md-6 mt-3 mt-md-0">
+                <nav class="navbar navbar-light" style="background: rgba(255, 255, 255, 0.1); border-radius: 20px; height: auto; width: 100%; margin-top: 10px;">
+                    <div class="container-fluid d-flex justify-content-center flex-wrap">
+                        <ul class="navbar-nav flex-row flex-wrap justify-content-center w-100" style="gap: 10px;">
+                            <li class="nav-item">
+                                <NavLink class="nav-link text-white" href="" Match="NavLinkMatch.All">
+                                    <span>@Localize["Home"]</span>
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link text-white" href="contact">
+                                    <span>@Localize["Contact"]</span>
+                                </NavLink>
+                            </li>
+                            <li class="nav-item">
+                                <NavLink class="nav-link text-white" href="about">
+                                    <span>@Localize["About"]</span>
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+
+			<!-- Sélecteurs langue/devise -->
+			<div class="col-4 col-md-2 text-end">
+				<LanguageSelector />
+				<CurrencySelector />
+			</div>
+		</div>
+
+		<article>
+			@Body
+		</article>
+	</main>
+    <MudDivider Class="mt-6" />
+
+    <footer class="py-6 px-4 text-center text-sm text-muted-foreground">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between space-y-2 md:space-y-0">
+            <span>© 2025 Subeasy. Tous droits réservés.</span>
+
+            <div class="flex space-x-4">
+                <MudLink Href="/about" Target="_self">À propos</MudLink>
+                <MudLink Href="/terms" Target="_self">CGU</MudLink>
+                <MudLink Href="/refund-policy" Target="_self">Remboursement</MudLink>
+                <MudLink Href="/contact" Target="_self">Contact</MudLink>
+            </div>
+        </div>
+    </footer>
+
+</div>
+
+@* <div id="blazor-error-ui">
+	An unhandled error has occurred.
+	<a href="" class="reload">Reload</a>
+	<a class="dismiss">🗙</a>
+</div> *@

@@ -10,32 +10,38 @@
   },
   "profiles": {
     "http": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "http://localhost:5114",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "launchBrowser": true,
+        "launchUrl": "swagger",
+        "applicationUrl": "http://localhost:5114",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "PAYPAL_CLIENT_ID": "Ad7WcnyyeUwvFy8S0IwJ8UTU8eNUZnPQhRzKiqWs9ubE-6SVTen2bE6fSE6Na8vPNpcoSgR_lKEHH9KT",
+            "PAYPAL_CLIENT_SECRET": "ENtYyhwOcAkgbVjSoDLcZXlljKb4fMMg2boJdzsLd1XCZh7ZZ9UUkFwid9NwTYuNiMW3zD60Qm2wLRHM"
+        }
     },
     "https": {
-      "commandName": "Project",
-      "dotnetRunMessages": true,
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "applicationUrl": "https://localhost:7237;http://localhost:5114",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "commandName": "Project",
+        "dotnetRunMessages": true,
+        "launchBrowser": true,
+        "launchUrl": "swagger",
+        "applicationUrl": "https://localhost:7237;http://localhost:5114",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "PAYPAL_CLIENT_ID": "Ad7WcnyyeUwvFy8S0IwJ8UTU8eNUZnPQhRzKiqWs9ubE-6SVTen2bE6fSE6Na8vPNpcoSgR_lKEHH9KT",
+            "PAYPAL_CLIENT_SECRET": "ENtYyhwOcAkgbVjSoDLcZXlljKb4fMMg2boJdzsLd1XCZh7ZZ9UUkFwid9NwTYuNiMW3zD60Qm2wLRHM"
+        }
     },
     "IIS Express": {
-      "commandName": "IISExpress",
-      "launchBrowser": true,
-      "launchUrl": "swagger",
-      "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
-      }
+        "commandName": "IISExpress",
+        "launchBrowser": true,
+        "launchUrl": "swagger",
+        "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "PAYPAL_CLIENT_ID": "Ad7WcnyyeUwvFy8S0IwJ8UTU8eNUZnPQhRzKiqWs9ubE-6SVTen2bE6fSE6Na8vPNpcoSgR_lKEHH9KT",
+            "PAYPAL_CLIENT_SECRET": "ENtYyhwOcAkgbVjSoDLcZXlljKb4fMMg2boJdzsLd1XCZh7ZZ9UUkFwid9NwTYuNiMW3zD60Qm2wLRHM"
+        }
     }
   }
 }

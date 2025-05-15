@@ -10,5 +10,7 @@ namespace API.Models
 
         [Required]
         public string Name { get; set; } = null!;
+        [Required]
+        public int Index { get; set; }
     }
 }

@@ -1,0 +1,75 @@
+﻿@inherits LayoutComponentBase
+
+<div class="page" style="display:block">
+	@*     <div class="sidebar">
+        <NavMenu />
+    </div> *@
+	
+	<main>
+		<div  style="display:flex; width:100%;     place-content: flex-start;background-color: #0f001b !important;
+">
+			<div style="    align-items: center;
+    display: flex
+;
+    padding: 20px 20px;
+    width: 15%;">
+				<img src="/images/swift0.png" style="margin-right:10px" />
+
+				<a style="  color: #ffffff;
+               text-align: left;
+               font-family: 'Poppins-Medium' , sans-serif;
+               font-size: 24px;
+               line-height: 118.2%;
+               letter-spacing: -0.03em;
+               font-weight: 500;">Save Pass</a>
+			</div>
+			<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3" style="background: rgba(255, 255, 255, 0.1) !important;
+    border-radius: 20px;
+    height: 40px;
+    left: 35%;
+    translate: -50%;
+    width: 85%;
+    max-width: 600px;
+    min-width: 300px;
+    margin-top: 10px;">
+
+				<div class="container">
+					<div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+						<ul class="navbar-nav flex-grow-1" style="place-content:center;">
+							<li class="nav-item">
+								<NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+									<span class="nav-text">Home</span>
+								</NavLink>
+							</li>
+							<li class="nav-item">
+								<NavLink class="nav-link" href="counter">
+									<span class="nav-text">Counter</span>
+								</NavLink>
+							</li>
+							<li class="nav-item">
+								<NavLink class="nav-link" href="counter">
+									<span class="nav-text">Counter</span>
+								</NavLink>
+							</li>
+							<li class="nav-item">
+								<NavLink class="nav-link" href="counter">
+									<span class="nav-text">Counter</span>
+								</NavLink>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+		</div>
+
+		<article class="content px-4">
+			@Body
+		</article>
+	</main>
+</div>
+
+<div id="blazor-error-ui">
+	An unhandled error has occurred.
+	<a href="" class="reload">Reload</a>
+	<a class="dismiss">🗙</a>
+</div>

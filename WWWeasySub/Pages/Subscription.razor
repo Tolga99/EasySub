@@ -223,28 +223,28 @@ else
 		<TitleContent>
 			<MudText Typo="Typo.h6">
 				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Class="mr-3" />
-				Commande reçue : #@info.SubscriptionId
+				@Localize["OrderReceivedNo"] : #@info.SubscriptionId
 			</MudText>
 		</TitleContent>
 
-		<DialogContent>
-			<MudText Typo="Typo.body1" Class="mb-2">
-				Bonjour @info.Email,
-			</MudText>
-			<MudText Typo="Typo.body1" Class="mb-2">
-				Nous avons bien reçu votre commande pour l’abonnement <b>@info.Plan</b>.
-			</MudText>
-			<MudText Typo="Typo.body1" Class="mb-2">
-				Vous recevrez vos identifiants dans un délai de <b>24 à 48h</b>.
-			</MudText>
-			<MudText Typo="Typo.body1" Class="mb-2">
-				Pour toute question, vous pouvez nous contacter à l'adresse : <b>@supportEmail</b>
-			</MudText>
-			<MudText Typo="Typo.body1" Class="mt-3">
-				Merci pour votre confiance.<br />
-				L’équipe Subeasy
-			</MudText>
-		</DialogContent>
+<DialogContent>
+    <MudText Typo="Typo.body1" Class="mb-2">
+        @Localize["GreetingWithEmail"] @info.Email,
+    </MudText>
+    <MudText Typo="Typo.body1" Class="mb-2">
+        @Localize["OrderReceived"] <b>@info.Plan</b>.
+    </MudText>
+    <MudText Typo="Typo.body1" Class="mb-2">
+        @Localize["DeliveryTime"]
+    </MudText>
+    <MudText Typo="Typo.body1" Class="mb-2">
+        @Localize["ContactSupport"] <b>@supportEmail</b>
+    </MudText>
+    <MudText Typo="Typo.body1" Class="mt-3">
+        @Localize["ThankYou"]<br />
+        @Localize["TeamSignature"]
+    </MudText>
+</DialogContent>
 
 		<DialogActions>
 			<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CloseDialog" Class="px-10">

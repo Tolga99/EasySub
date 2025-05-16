@@ -117,73 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About" xml:space="preserve">
-    <value>About</value>
+  <data name="ClientEmailBody" xml:space="preserve">
+    <value>Bonjour,\n\nNous avons bien reçu votre commande pour un abonnement {0}.\nVous recevrez vos identifiants dans un délai de 24 à 48h.\n\nPour toute question, vous pouvez nous contacter à l'adresse : {1}\n\nMerci pour votre confiance.\n\nL’équipe Subeasy.</value>
   </data>
-  <data name="commandSucess" xml:space="preserve">
-    <value>"Your order was successfully completed. You will receive it at the following email address: {email}. Delivery will take between 24 and 48 hours."</value>
-  </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact</value>
-  </data>
-  <data name="ContactSupport" xml:space="preserve">
-    <value>For any questions, you can contact us at :</value>
-  </data>
-  <data name="DeliveryText" xml:space="preserve">
-    <value>Delivery guaranteed within 24 to 48 hours</value>
-  </data>
-  <data name="DeliveryTime" xml:space="preserve">
-    <value>You will receive your credentials within &lt;b&gt;24 to 48 hours&lt;/b&gt;.</value>
-  </data>
-  <data name="GreetingWithEmail" xml:space="preserve">
-    <value>Hello</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Loading..." xml:space="preserve">
-    <value>Loading ...</value>
+  <data name="ClientEmailSubject" xml:space="preserve">
+    <value>Confirmation de commande {0} - {1}</value>
   </data>
   <data name="month" xml:space="preserve">
-    <value>month</value>
+    <value>mois</value>
   </data>
   <data name="months" xml:space="preserve">
-    <value>months</value>
-  </data>
-  <data name="NoBrandFound" xml:space="preserve">
-    <value>No brand found.</value>
-  </data>
-  <data name="OrderReceived" xml:space="preserve">
-    <value>We have received your order for the subscription</value>
-  </data>
-  <data name="OrderReceivedNo" xml:space="preserve">
-    <value>Order received</value>
-  </data>
-  <data name="PayLessEnjoyMore" xml:space="preserve">
-    <value>Pay less, enjoy more !</value>
-  </data>
-  <data name="Payment" xml:space="preserve">
-    <value>Payment</value>
-  </data>
-  <data name="PaymentMethods" xml:space="preserve">
-    <value>Payment methods</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="TeamSignature" xml:space="preserve">
-    <value>The Subeasy team</value>
-  </data>
-  <data name="ThankYou" xml:space="preserve">
-    <value>Thank you for your trust.</value>
-  </data>
-  <data name="Trends" xml:space="preserve">
-    <value>Trends</value>
-  </data>
-  <data name="WeAcceptCryptos" xml:space="preserve">
-    <value>We also accept cryptos</value>
-  </data>
-  <data name="YouSave" xml:space="preserve">
-    <value>You save</value>
+    <value>mois</value>
   </data>
 </root>

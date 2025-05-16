@@ -22,6 +22,7 @@ namespace API.Models
         [Required]
         [Column(TypeName = "decimal(10,2)")]
         public decimal Price { get; set; } // Prix de vente
+        public bool? Enabled { get; set; }
         public override string ToString()
         {
             return $"{Brand?.Name} - {SubscriptionType?.Name} ({DurationMonths})";

@@ -1,7 +1,9 @@
+using System.Globalization;
 using API.Data;
 using API.Interfaces;
 using API.Models;
 using API.Services;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,8 @@ builder.Configuration
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
+builder.Services.AddLocalization(options => options.ResourcesPath = "");
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -43,7 +47,12 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-
+app.UseRequestLocalization(new RequestLocalizationOptions
+{
+    DefaultRequestCulture = new RequestCulture("fr"),
+    SupportedCultures = new[] { new CultureInfo("fr"), new CultureInfo("en") },
+    SupportedUICultures = new[] { new CultureInfo("fr"), new CultureInfo("en") }
+});
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {

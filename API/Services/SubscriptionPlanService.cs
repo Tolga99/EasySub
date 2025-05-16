@@ -19,12 +19,12 @@ namespace API.Services
 
         public async Task<List<SubscriptionPlan>> GetAllPlans()
         {
-            return await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).ToListAsync();
+            return await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).Where(a => a.Enabled == true).ToListAsync();
         }
 
         public async Task<SubscriptionPlan?> GetPlanById(int id)
         {
-            return await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).FirstOrDefaultAsync(a => a.Id == id);
+            return await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).Where(a => a.Enabled == true).FirstOrDefaultAsync(a => a.Id == id);
         }
 
         public async Task<SubscriptionPlan> CreatePlan(SubscriptionPlan plan)
@@ -36,7 +36,7 @@ namespace API.Services
 
         public async Task<bool> DeletePlan(int id)
         {
-            var plan = await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).FirstOrDefaultAsync(a => a.Id == id);
+            var plan = await _context.SubscriptionPlans.AsNoTracking().Include(a => a.Brand).Include(a => a.SubscriptionType).Where(a => a.Enabled == true).FirstOrDefaultAsync(a => a.Id == id);
             if (plan == null)
                 return false;
 
@@ -47,7 +47,7 @@ namespace API.Services
         public async Task<List<SubscriptionPlan>> GetPlansByBrandId(int brandId)
         {
             return await _context.SubscriptionPlans.AsNoTracking()
-                .Where(sp => sp.BrandId == brandId)
+                .Where(sp => sp.BrandId == brandId && sp.Enabled == true)
                 .Include(sp => sp.SubscriptionType).Include(a => a.Brand)
                 .ToListAsync();
         }

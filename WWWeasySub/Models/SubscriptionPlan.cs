@@ -15,6 +15,7 @@ namespace WWWeasySub.Models
 
         public int DurationMonths { get; set; } // Ex: 1, 3, 6, 12
         public decimal Price { get; set; } // Prix de vente
+        public bool? Enabled { get; set; }
         public override string ToString()
         {
             return SubscriptionType?.Name ?? "Unnamed Plan";

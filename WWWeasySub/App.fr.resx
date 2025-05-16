@@ -127,8 +127,17 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
+  <data name="ContactSupport" xml:space="preserve">
+    <value>Pour toute question, vous pouvez nous contacter à l'adresse :</value>
+  </data>
   <data name="DeliveryText" xml:space="preserve">
     <value>Livraison garantie entre 24 et 48 heures</value>
+  </data>
+  <data name="DeliveryTime" xml:space="preserve">
+    <value>Vous recevrez vos identifiants dans un délai de 24 à 48h.</value>
+  </data>
+  <data name="GreetingWithEmail" xml:space="preserve">
+    <value>Bonjour</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Acceuil</value>
@@ -145,6 +154,12 @@
   <data name="NoBrandFound" xml:space="preserve">
     <value>Aucune marque trouvée.</value>
   </data>
+  <data name="OrderReceived" xml:space="preserve">
+    <value>Nous avons bien reçu votre commande pour l’abonnement</value>
+  </data>
+  <data name="OrderReceivedNo" xml:space="preserve">
+    <value>Commande reçue</value>
+  </data>
   <data name="PayLessEnjoyMore" xml:space="preserve">
     <value>Payez moins, profitez plus !</value>
   </data>
@@ -156,6 +171,12 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Sélectionnez</value>
+  </data>
+  <data name="TeamSignature" xml:space="preserve">
+    <value>L’équipe Subeasy</value>
+  </data>
+  <data name="ThankYou" xml:space="preserve">
+    <value>Merci pour votre confiance.</value>
   </data>
   <data name="Trends" xml:space="preserve">
     <value>Tendances</value>

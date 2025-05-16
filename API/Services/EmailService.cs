@@ -4,9 +4,10 @@ using System.Net.Mail;
 using System.Threading.Tasks;
 using API.Data;
 using API.Interfaces;
-using API.Models;
+using API.Resources;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 
 namespace API.Services
 {
@@ -14,10 +15,13 @@ namespace API.Services
     {
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;
-        public EmailService(IConfiguration configuration, IServiceProvider serviceProvider)
+        private readonly IStringLocalizer<Emails> _localizer;
+
+        public EmailService(IConfiguration configuration, IServiceProvider serviceProvider, IStringLocalizer<Emails> localizer)
         {
             _configuration = configuration;
             _serviceProvider = serviceProvider;
+            _localizer = localizer;
         }
 
         public async Task<bool> SendEmailAsync(string toEmail, string subject, string body)
@@ -42,7 +46,7 @@ namespace API.Services
                     From = new MailAddress(fromEmail),
                     Subject = subject,
                     Body = body,
-                    IsBodyHtml = false
+                    IsBodyHtml = true
                 };
                 mailMessage.To.Add(toEmail);
 
@@ -67,21 +71,22 @@ namespace API.Services
                     string supportEmail = "sva.records.o@gmail.com";
 
                     // 1. Email pour SVA
-                    string internalSubject = $"Nouvelle commande {subscription.Id} : {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"}";
-                    string internalBody = $"Un client ({subscription.ClientEmail}) a commandé un abonnement {subscription.SubscriptionPlan.SubscriptionType.Name}.\n" +
+                    string internalSubject = $"Nouvelle commande {subscription.Id} : {subscription.SubscriptionPlan.ToString()}";
+                    string internalBody = $"Un client ({subscription.ClientEmail}) a commandé un abonnement {subscription.SubscriptionPlan.ToString()}.\n" +
                                           $"Merci de préparer la commande et de la livrer dans les 24 à 48h.";
 
                     var internalSend = await SendEmailAsync(supportEmail, internalSubject, internalBody);
 
                     // 2. Email pour le CLIENT
-                    string clientSubject = $"Confirmation de commande {subscription.Id} - {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"}";
-                    string clientBody = $"Bonjour,\n\n" +
-                                        $"Nous avons bien reçu votre commande pour un abonnement {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"}.\n" +
-                                        $"Vous recevrez vos identifiants dans un délai de 24 à 48h.\n\n" +
-                                        $"Pour toute question, vous pouvez nous contacter à l'adresse : {supportEmail}\n\n" +
-                                        $"Merci pour votre confiance.\n\n" +
-                                        $"L’équipe Subeasy.";
-
+                    //string clientSubject = $"Confirmation de commande {subscription.Id} - {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"}";
+                    //string clientBody = $"Bonjour,\n\n" +
+                    //                    $"Nous avons bien reçu votre commande pour un abonnement {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"}.\n" +
+                    //                    $"Vous recevrez vos identifiants dans un délai de 24 à 48h.\n\n" +
+                    //                    $"Pour toute question, vous pouvez nous contacter à l'adresse : {supportEmail}\n\n" +
+                    //                    $"Merci pour votre confiance.\n\n" +
+                    //                    $"L’équipe Subeasy.";
+                    string clientSubject = _localizer["ClientEmailSubject", subscription.Id, subscription.SubscriptionPlan.ToString()];
+                    string clientBody = _localizer["ClientEmailBody", subscription.SubscriptionPlan.ToString(), supportEmail];
                     var clientSend = await SendEmailAsync(subscription.ClientEmail, clientSubject, clientBody);
 
                     return internalSend && clientSend;

@@ -91,7 +91,8 @@ namespace API.Controllers
                 CancelUrl = $"https://localhost:7060/subscription/{plan.Brand.Name}?canceled=true",
                 Metadata = new Dictionary<string, string>
                 {
-                    { "subscriptionId", sub.ToString() }
+                    { "subscriptionId", sub.ToString() },
+                    { "culture", cart.Culture ?? "en" }
                 }
             };
             var service = new SessionService();

@@ -5,6 +5,8 @@ using API.Models;
 using API.Services;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +30,15 @@ builder.Configuration
     .AddEnvironmentVariables();
 builder.Services.AddLocalization(options => options.ResourcesPath = "");
 
+builder.Services.Configure<RequestLocalizationOptions>(options =>
+{
+    var supportedCultures = new[] { "fr", "en" };
+    options.SetDefaultCulture("fr")
+           .AddSupportedCultures(supportedCultures)
+           .AddSupportedUICultures(supportedCultures);
+    // Pas besoin de toucher aux RequestCultureProviders si Accept-Language suffit
+});
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -47,11 +58,12 @@ builder.Services.AddCors(options =>
 });
 
 var app = builder.Build();
-app.UseRequestLocalization(new RequestLocalizationOptions
+var localizationOptions = app.Services.GetRequiredService<IOptions<RequestLocalizationOptions>>().Value;
+app.UseRequestLocalization(localizationOptions);
+app.Use(async (context, next) =>
 {
-    DefaultRequestCulture = new RequestCulture("fr"),
-    SupportedCultures = new[] { new CultureInfo("fr"), new CultureInfo("en") },
-    SupportedUICultures = new[] { new CultureInfo("fr"), new CultureInfo("en") }
+    Console.WriteLine($"[Culture Debug] CurrentCulture: {CultureInfo.CurrentCulture}, CurrentUICulture: {CultureInfo.CurrentUICulture}");
+    await next();
 });
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

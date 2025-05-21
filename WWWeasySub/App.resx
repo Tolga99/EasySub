@@ -123,6 +123,12 @@
   <data name="commandSucess" xml:space="preserve">
     <value>"Your order was successfully completed. You will receive it at the following email address: {email}. Delivery will take between 24 and 48 hours."</value>
   </data>
+  <data name="Compare_ConfirmEmail" xml:space="preserve">
+    <value>Emails do not match.</value>
+  </data>
+  <data name="ConfirmEmail" xml:space="preserve">
+    <value>Confirm Email</value>
+  </data>
   <data name="Contact" xml:space="preserve">
     <value>Contact</value>
   </data>
@@ -135,11 +141,17 @@
   <data name="DeliveryTime" xml:space="preserve">
     <value>You will receive your credentials within &lt;b&gt;24 to 48 hours&lt;/b&gt;.</value>
   </data>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
+  </data>
   <data name="GreetingWithEmail" xml:space="preserve">
     <value>Hello</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="InvalidOrExpiredCode" xml:space="preserve">
+    <value>Invalid or expired code.</value>
   </data>
   <data name="Loading..." xml:space="preserve">
     <value>Loading ...</value>
@@ -167,6 +179,12 @@
   </data>
   <data name="PaymentMethods" xml:space="preserve">
     <value>Payment methods</value>
+  </data>
+  <data name="PromoAlreadyApplied" xml:space="preserve">
+    <value>A promo code has already been applied.</value>
+  </data>
+  <data name="PromoCodeApplied" xml:space="preserve">
+    <value>🎉 Code '{0}' applied: -{1}%</value>
   </data>
   <data name="Select" xml:space="preserve">
     <value>Select</value>

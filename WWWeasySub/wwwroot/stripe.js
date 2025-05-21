@@ -1,11 +1,12 @@
-﻿window.startStripeCheckout = async function (selectedPlanId, currencyCode, email, promoCode = null) {
+﻿window.startStripeCheckout = async function (selectedPlanId, currencyCode, email, promoCode = null, culture) {
     const stripe = Stripe('pk_test_51RKNsaQMSCWUg7Iy36ZcINrGCDJqYwfLEgI43KEinzsmkjsyPPMe95NeKyfhackWctNK17odBTUPM6TYjrfgl3rV00BzpL1THn'); // Mets ici ta vraie clé publique Stripe
 
     const request = {
         planId: selectedPlanId,
         currencyCode: currencyCode,
         promoCode: promoCode,
-        email: email
+        email: email,
+        culture: culture
     };
 
     const response = await fetch("https://localhost:7237/api/payments/create-checkout-session", {

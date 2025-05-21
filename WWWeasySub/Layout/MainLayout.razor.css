@@ -193,3 +193,120 @@ main {
     font-size: 20px;
     font-weight: 600;
 }
+/* Titres */
+:deep(.title-xl) {
+    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 60px;
+    line-height: 73px;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+}
+
+:deep(.title-lg) {
+    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 40px;
+    line-height: 75px;
+    font-weight: 700;
+}
+
+/* Texte */
+:deep(.text-regular) {
+    font-family: 'HostGrotesk-Regular', sans-serif;
+    font-size: 20px;
+    line-height: 27px;
+    font-weight: 400;
+}
+
+/* Couleurs */
+:deep(.text-white) {
+    color: #ffffff;
+}
+
+:deep(.text-purple) {
+    color: #b5a8ed;
+}
+
+:deep(.gradient-text) {
+    background: linear-gradient( 180deg, rgba(93, 52, 197, 1) 2%, rgba(147, 130, 229, 1) 50%, rgba(93, 52, 197, 1) 100% );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Layout */
+:deep(.home-display-positions) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
+}
+
+:deep(.home-title) {
+    color: #ffffff;
+    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 60px;
+    line-height: 73px;
+    letter-spacing: 0.01em;
+    font-weight: 700;
+}
+
+:deep(.home-title-gradient) {
+    background: linear-gradient( 180deg, rgba(93, 52, 197, 1) 2%, rgba(147, 130, 229, 1) 50%, rgba(93, 52, 197, 1) 100% );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 60px;
+    line-height: 73px;
+    letter-spacing: 0.01em;
+    font-weight: 700;
+}
+
+:deep(.home-subtext) {
+    font-family: 'HostGrotesk-Regular', sans-serif;
+    font-size: 20px;
+    line-height: 27px;
+    font-weight: 400;
+}
+
+:deep(.home-subtext-white) {
+    color: #ffffff;
+}
+
+:deep(.home-subtext-purple) {
+    color: #b5a8ed;
+}
+
+:deep(.crypto-text) {
+    color: #ffffff;
+    text-align: center;
+    font-family: 'Inter-Regular', sans-serif;
+    font-size: 12px;
+    line-height: 95%;
+    letter-spacing: -0.03em;
+    font-weight: 400;
+}
+
+:deep(.section-title) {
+    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 40px;
+    line-height: 75px;
+    font-weight: 700;
+    color: white;
+}
+
+:deep(.display-flex-left) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+:deep(home-display-detail) {
+    color: #ffffff;
+    text-align: left;
+    font-family: 'BricolageGrotesque-Bold', sans-serif;
+    font-size: 20px;
+    line-height: 73px;
+    letter-spacing: 0.01em;
+    font-weight: 700;
+    font-size: 25px;
+}

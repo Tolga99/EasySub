@@ -206,14 +206,16 @@ else
 					<span class="payment-card-title">@Localize["PaymentMethods"]</span>
 					<div class="row" style="    margin-bottom: 20px;">
 						<MudForm Model="@subscriptionModel" OnValidSubmit="HandleValidSubmit">
-							<MudTextField Label="Email" Style="color: white;"
+							<MudTextField Label="@Localize["Email"]" Style="color: white;"
 										  InputClass="custom-placeholder" @bind-Value="subscriptionModel.Email" Required="true" Error="@emailError" />
-							<MudTextField Label="Confirmer l'Email" Style="color: white;"
+							<MudTextField Label="@Localize["ConfirmEmail"]" Style="color: white;"
 										  InputClass="custom-placeholder" @bind-Value="subscriptionModel.ConfirmEmail" Required="true" Error="@confirmEmailError" />
 						</MudForm>
 					</div>
 					<div>
-						<button class="checkout-sub" @onclick="@(() => Checkout())">Checkout</button>
+						<button class="checkout-sub" @onclick="Checkout" disabled="@IsCheckoutDisabled">
+							Checkout
+						</button>
 					</div>
 				</div>
 			</div>
@@ -255,6 +257,11 @@ else
 }
 @code {
 	private bool _visible;
+	private bool IsCheckoutDisabled =>
+	string.IsNullOrWhiteSpace(subscriptionModel.Email) ||
+	string.IsNullOrWhiteSpace(subscriptionModel.ConfirmEmail) ||
+	!subscriptionModel.Email.Equals(subscriptionModel.ConfirmEmail, StringComparison.OrdinalIgnoreCase);
+
 	private readonly DialogOptions _dialogOptions = new() { FullWidth = true };
 	private readonly string supportEmail = "sva.records.o@gmail.com";
 	private void OpenDialog()
@@ -287,6 +294,9 @@ else
 							!string.IsNullOrEmpty(subscriptionModel.PaymentMethod);
 	private bool showPopup = false;
 	private SubscriptionInfo info;
+	[Parameter][SupplyParameterFromQuery] public bool? canceled { get; set; }
+	private string errorMessage;
+
 	protected override async Task OnInitializedAsync()
 	{
 		Console.WriteLine($"Chargement de la page pour: {paramBrandName}");
@@ -294,6 +304,7 @@ else
 		var uri = Nav.ToAbsoluteUri(Nav.Uri);
 		var query = System.Web.HttpUtility.ParseQueryString(uri.Query);
 		var sessionId = query["session_id"];
+
 		if (!string.IsNullOrEmpty(sessionId))
 		{
 			try
@@ -316,6 +327,11 @@ else
 			{
 				Console.WriteLine("Erreur : " + ex.Message);
 			}
+		}
+		if (canceled == true)
+		{
+			// Affiche une alerte ou redirige
+			errorMessage = "Le paiement a été annulé.";
 		}
 		try
 		{
@@ -364,7 +380,7 @@ else
 			BrandName = SelectedBrand.Name;
 			Plans = (await PlanService.GetPlansByBrandIdAsync(SelectedBrand.Id)).ToList();
 			SubscriptionTypes = Plans.Select(p => p.SubscriptionType.Name).Distinct().ToList();
-			SelectedPlan = Plans.Where(a => a.BrandId == SelectedBrand.Id && a.DurationMonths == selectedDuration).OrderByDescending(a => a.Price).FirstOrDefault();
+			SelectedPlan = Plans.Where(a => a.BrandId == SelectedBrand.Id && a.DurationMonths == selectedDuration).OrderBy(a => a.Price).FirstOrDefault();
 			Durations = Plans.Select(p => p.DurationMonths).Distinct().ToList();
 			// Force le rendu de la page après la mise à jour de l'état
 			// await InvokeAsync(() => StateHasChanged());
@@ -421,7 +437,7 @@ else
 			}
 			if (promoApplied)
 			{
-				promoMessage = "Un code promo est déjà appliqué.";
+				promoMessage = Localize["PromoAlreadyApplied"];
 				promoMessageColor = Color.Warning;
 				return;
 			}
@@ -430,12 +446,12 @@ else
 
 			if (result == null)
 			{
-				promoMessage = "Code invalide ou expiré.";
+				promoMessage = Localize["InvalidOrExpiredCode"];
 				promoMessageColor = Color.Error;
 			}
 			else
 			{
-				promoMessage = $"🎉 Code '{result.Code}' appliqué : -{result.DiscountPercentage}%";
+				promoMessage = Localize["PromoCodeApplied", result.Code, result.DiscountPercentage];
 				promoMessageColor = Color.Success;
 				foreach (var plan in Plans.Where(p => p.BrandId == SelectedPlan.BrandId))
 				{
@@ -500,7 +516,9 @@ else
 				Console.WriteLine("No selected plan");
 				throw new NullReferenceException("No selected plan");
 			}
-			await JS.InvokeVoidAsync("startStripeCheckout", SelectedPlan.Id, CurrencyService.SelectedCurrency.Code, subscriptionModel.Email, promoCode);
+			var culture = await JS.InvokeAsync<string>("blazorCulture.get");
+			// await JS.InvokeVoidAsync("startStripeCheckout", SelectedPlan.Id, CurrencyService.SelectedCurrency.Code, subscriptionModel.Email, promoCode);
+			await JS.InvokeVoidAsync("startStripeCheckout", SelectedPlan.Id, CurrencyService.SelectedCurrency.Code, subscriptionModel.Email, promoCode, culture);
 
 			// var request = new OrderRequestCart
 			// 	{
@@ -631,7 +649,7 @@ else
 
 		[Required]
 		[EmailAddress]
-		[Compare("Email", ErrorMessage = "Les emails ne correspondent pas.")]
+		[Compare("Email", ErrorMessageResourceType = typeof(App), ErrorMessageResourceName = "Compare_ConfirmEmail")]
 		public string ConfirmEmail { get; set; } = string.Empty;
 	}
 	public class CreateCheckoutResponse

@@ -8,6 +8,7 @@ using Microsoft.JSInterop;
 using System.Globalization;
 using WWWeasySub.Extensions;
 using System;
+using WWWeasySub.Handler;
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
@@ -25,10 +26,16 @@ builder.Configuration.AddJsonFile($"appsettings.{builder.HostEnvironment.Environ
 
 var apiBaseUrl = builder.Configuration["ApiBaseUrl"];
 
-builder.Services.AddScoped(sp => new HttpClient
+builder.Services.AddScoped<LanguageHeaderHandler>();
+
+builder.Services.AddHttpClient("ApiClient", client =>
 {
-    BaseAddress = new Uri(apiBaseUrl)
-});
+    client.BaseAddress = new Uri(apiBaseUrl);
+})
+.AddHttpMessageHandler<LanguageHeaderHandler>();
+
+builder.Services.AddScoped(sp =>
+    sp.GetRequiredService<IHttpClientFactory>().CreateClient("ApiClient"));
 
 builder.Services.AddLocalization();
 

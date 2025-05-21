@@ -46,7 +46,7 @@ namespace API.Services
                     From = new MailAddress(fromEmail),
                     Subject = subject,
                     Body = body,
-                    IsBodyHtml = true
+                    IsBodyHtml = true,
                 };
                 mailMessage.To.Add(toEmail);
 

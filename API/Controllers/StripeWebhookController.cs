@@ -3,6 +3,7 @@ using Stripe.Climate;
 using Stripe;
 using API.Interfaces;
 using Stripe.Checkout;
+using System.Globalization;
 
 namespace API.Controllers
 {
@@ -38,6 +39,22 @@ namespace API.Controllers
                 if (stripeEvent.Type == Stripe.EventTypes.CheckoutSessionCompleted)
                 {
                     var session = stripeEvent.Data.Object as Session;
+                    if (session.Metadata.TryGetValue("culture", out var cultureCode))
+                    {
+                        try
+                        {
+                            var culture = new CultureInfo(cultureCode);
+                            CultureInfo.CurrentCulture = culture;
+                            CultureInfo.CurrentUICulture = culture;
+                        }
+                        catch (CultureNotFoundException)
+                        {
+                            // Fallback si jamais la culture est invalide
+                            var fallbackCulture = new CultureInfo("en");
+                            CultureInfo.CurrentCulture = fallbackCulture;
+                            CultureInfo.CurrentUICulture = fallbackCulture;
+                        }
+                    }
                     var subId = session.Metadata["subscriptionId"];
                     if (!string.IsNullOrEmpty(subId))
                     {

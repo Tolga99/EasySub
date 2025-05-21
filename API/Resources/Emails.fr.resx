@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ClientEmailBody" xml:space="preserve">
-    <value>Bonjour,\n\nNous avons bien reçu votre commande pour un abonnement {0}.\nVous recevrez vos identifiants dans un délai de 24 à 48h.\n\nPour toute question, vous pouvez nous contacter à l'adresse : {1}\n\nMerci pour votre confiance.\n\nL’équipe Subeasy.</value>
+    <value>Bonjour,&lt;br&gt;&lt;br&gt;Nous avons bien reçu votre commande pour un abonnement {0}.&lt;br&gt;Vous recevrez vos identifiants dans un délai de 24 à 48h.&lt;br&gt;&lt;br&gt;Pour toute question, vous pouvez nous contacter à l'adresse : {1}&lt;br&gt;&lt;br&gt;Merci pour votre confiance.&lt;br&gt;&lt;br&gt;L’équipe Subeasy.</value>
   </data>
   <data name="ClientEmailSubject" xml:space="preserve">
     <value>Confirmation de commande {0} - {1}</value>

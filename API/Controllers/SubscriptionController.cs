@@ -12,10 +12,12 @@ namespace API.Controllers
     {
         private readonly ISubscriptionService _subscriptionService;
         private readonly IEmailService _emailService;
-        public SubscriptionController(ISubscriptionService subscriptionService, IEmailService emailService)
+        private readonly IAccountService _accountService;
+        public SubscriptionController(ISubscriptionService subscriptionService, IEmailService emailService, IAccountService accountService)
         {
             _subscriptionService = subscriptionService;
             _emailService = emailService;
+            _accountService = accountService;
         }
 
         [HttpPost("purchase")]
@@ -44,7 +46,8 @@ namespace API.Controllers
 
             if (!success)
                 return StatusCode(500, "Une erreur est survenue lors de l'achat.");
-            _emailService.SendActivationEmailAsync(subscriptionId, accountMail, accountPass);
+            await _accountService.AddAndLinkAccount(new AccountRequest(subscriptionId, accountMail, accountPass));
+            await _emailService.SendActivationEmailAsync(subscriptionId, accountMail, accountPass);
             return Ok(new { message = "Abonnement acheté avec succès!" });
         }
 

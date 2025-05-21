@@ -22,7 +22,7 @@ namespace API.Controllers
             if (account == null) return BadRequest("Données invalides.");
 
             var createdAccount = await _accountService.AddAccount(account);
-            return CreatedAtAction(nameof(GetAccount), new { accountId = createdAccount.Id }, createdAccount);
+            return Ok(createdAccount);
         }
         [HttpPost("addandlink")]
         public async Task<IActionResult> AddAndLinkAccount([FromBody] AccountRequest request)
@@ -36,10 +36,10 @@ namespace API.Controllers
                 Password = request.Password // TODO: Ajouter un hashage plus tard
             };
 
-            var createdAccount = await _accountService.AddAccount(account);
-            await _accountService.AssignSubscriptionToAccount(createdAccount.Id, request.SubscriptionId);
+            var createdAccountId = await _accountService.AddAccount(account);
+            await _accountService.AssignSubscriptionToAccount(createdAccountId, request.SubscriptionId);
 
-            return CreatedAtAction(nameof(GetAccount), new { id = createdAccount.Id }, createdAccount);
+            return Ok(createdAccountId);
         }
 
         // 2. Supprimer un compte

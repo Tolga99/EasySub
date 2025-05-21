@@ -1,6 +1,7 @@
 ﻿using API.Data;
 using API.Interfaces;
 using API.Models;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Services
@@ -13,13 +14,40 @@ namespace API.Services
         {
             _context = context;
         }
+        public async Task<int?> AddAndLinkAccount(AccountRequest request)
+        {
+            if (request == null || string.IsNullOrEmpty(request.Email) || string.IsNullOrEmpty(request.Password))
+            {
+                Console.WriteLine("Données invalides reçues.");
+                return null;
+            }
+
+            try
+            {
+                var account = new Account
+                {
+                    Email = request.Email,
+                    Password = request.Password // TODO: Hash à ajouter
+                };
+
+                var createdAccountId = await AddAccount(account);
+                await AssignSubscriptionToAccount(createdAccountId, request.SubscriptionId);
+
+                return createdAccountId;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur lors de la création du compte : {ex.Message}");
+                return null;
+            }
+        }
 
         // 1. Ajouter un nouveau compte
-        public async Task<Account> AddAccount(Account account)
+        public async Task<int> AddAccount(Account account)
         {
             _context.Accounts.Add(account);
             await _context.SaveChangesAsync();
-            return account;
+            return account.Id;
         }
 
         // 2. Supprimer un compte
@@ -59,8 +87,8 @@ namespace API.Services
         // 6. Lier un abonnement à un compte
         public async Task<bool> AssignSubscriptionToAccount(int accountId, int subscriptionId)
         {
-            var account = await _context.Accounts.FindAsync(accountId);
-            var subscription = await _context.Subscriptions.FindAsync(subscriptionId);
+            var account = await _context.Accounts.FirstAsync(a => a.Id == accountId);
+            var subscription = await _context.Subscriptions.FirstAsync(a => a.Id == subscriptionId);
 
             if (account == null || subscription == null) return false;
 

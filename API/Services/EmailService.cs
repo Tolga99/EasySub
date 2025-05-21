@@ -109,18 +109,16 @@ namespace API.Services
                     var subscription = await subscriptionService.GetById(subscriptionId);
 
                     string supportEmail = "sva.records.o@gmail.com";
-
-                    string subject = $"Activation de votre abonnement ({subscription.Id}) {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"}";
-                    string body = $"Bonjour,\n\n" +
-                                  $"Votre abonnement {subscription.SubscriptionPlan.Brand.Name + " " + subscription.SubscriptionPlan.SubscriptionType.Name + " (" + subscription.SubscriptionPlan.DurationMonths + ")"} a bien été activé.\n\n" +
-                                  $"Voici vos identifiants :\n" +
-                                  $"- Email : {accountEmail}\n" +
-                                  $"- Mot de passe : {accountPassword}\n\n" +
-                                  $"ℹ️ Merci de ne pas modifier les informations du compte (email, mot de passe ou profil) afin de garantir le bon fonctionnement de l’abonnement.\n\n" +
-                                  $"Pour toute question ou problème, contactez-nous à : {supportEmail}\n\n" +
-                                  $"Bonne utilisation !\n\n" +
-                                  $"L’équipe Subeasy.";
-
+                    string subject = _localizer["SubscriptionActivatedSubject",
+                        subscription.Id,
+                        $"{subscription.SubscriptionPlan.Brand.Name} {subscription.SubscriptionPlan.SubscriptionType.Name} ({subscription.SubscriptionPlan.DurationMonths})"
+                    ];
+                    string body = _localizer["SubscriptionActivatedBody",
+                        $"{subscription.SubscriptionPlan.Brand.Name} {subscription.SubscriptionPlan.SubscriptionType.Name} ({subscription.SubscriptionPlan.DurationMonths})",
+                        accountEmail,
+                        accountPassword,
+                        supportEmail
+                    ];
                     return await SendEmailAsync(subscription.ClientEmail, subject, body);
                 }
             }

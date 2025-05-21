@@ -4,7 +4,7 @@ namespace API.Interfaces
 {
     public interface IAccountService
     {
-        Task<Account> AddAccount(Account account);
+        Task<int> AddAccount(Account account);
         Task<bool> DeleteAccount(int accountId);
         Task<Account?> GetAccount(int accountId);
         Task<IEnumerable<Account>> GetAllAccounts();
@@ -25,5 +25,6 @@ namespace API.Interfaces
         Task<int> GetTotalAccountsCount();
         Task<int> GetActiveAccountsCount();
         Task<int> GetExpiredAccountsCount();
+        Task<int?> AddAndLinkAccount(AccountRequest request);
     }
 }

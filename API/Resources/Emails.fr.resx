@@ -129,4 +129,10 @@
   <data name="months" xml:space="preserve">
     <value>mois</value>
   </data>
+  <data name="SubscriptionActivatedBody" xml:space="preserve">
+    <value>Bonjour,&lt;br&gt;&lt;br&gt;Votre abonnement à {0} a bien été activé.&lt;br&gt;&lt;br&gt;Voici vos identifiants de connexion :&lt;br&gt;- Email : {1}&lt;br&gt;- Mot de passe : {2}&lt;br&gt;&lt;br&gt;ℹ️ Merci d'éviter de modifier les informations du compte (email, mot de passe ou profil), sauf si nécessaire, afin de garantir le bon fonctionnement. Vous êtes libre de modifier le mot de passe si besoin.&lt;br&gt;&lt;br&gt;Pour toute question ou problème, contactez-nous à : {3}&lt;br&gt;&lt;br&gt;Bonne utilisation !&lt;br&gt;&lt;br&gt;L’équipe Subeasy.</value>
+  </data>
+  <data name="SubscriptionActivatedSubject" xml:space="preserve">
+    <value>Activation de votre abonnement (#{0}) - {1}</value>
+  </data>
 </root>

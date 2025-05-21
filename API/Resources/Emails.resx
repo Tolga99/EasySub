@@ -129,4 +129,10 @@
   <data name="months" xml:space="preserve">
     <value>months</value>
   </data>
+  <data name="SubscriptionActivatedBody" xml:space="preserve">
+    <value>Hello,&lt;br&gt;&lt;br&gt;Your subscription to {0} has been successfully activated.&lt;br&gt;&lt;br&gt;Here are your login credentials:&lt;br&gt;- Email: {1}&lt;br&gt;- Password: {2}&lt;br&gt;&lt;br&gt;ℹ️ Please avoid changing the account details (email, password, or profile) unless necessary, to ensure smooth usage. You are free to change the password if needed.&lt;br&gt;&lt;br&gt;If you have any questions or issues, feel free to contact us at: {3}&lt;br&gt;&lt;br&gt;Enjoy your subscription!&lt;br&gt;&lt;br&gt;The Subeasy Team.</value>
+  </data>
+  <data name="SubscriptionActivatedSubject" xml:space="preserve">
+    <value>Subscription Activated (#{0}) - {1}</value>
+  </data>
 </root>

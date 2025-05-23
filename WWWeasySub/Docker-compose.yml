@@ -1,0 +1,17 @@
+version: '3.7'
+
+services:
+   WWWeasySub:
+    image: easysub/WWWeasySub
+    #build:
+    #  context: .
+    #  dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=imazdigischoolbo.duckdns.org
+      - VIRTUAL_PORT=2005
+      - LETSENCRYPT_HOST=imazdigischoolbo.duckdns.org
+      - LETSENCRYPT_EMAIL=eov@imazdigischoolbo.duckdns.org
+    ports:
+      - 2005:80

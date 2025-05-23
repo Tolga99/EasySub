@@ -1,0 +1,46 @@
+version: '3.4'
+
+services:
+  api:
+    image: easysub/api
+    #build:
+    #  context: .
+    #  dockerfile: Api/Dockerfile
+    container_name: easysubapi
+    environment:
+      - TZ=Europe/Amsterdam
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - VIRTUAL_HOST=imazdigischoolapi.duckdns.org
+      - VIRTUAL_PORT=2000
+      - LETSENCRYPT_HOST=imazdigischoolapi.duckdns.org
+      - LETSENCRYPT_EMAIL=eov@imazdigischoolapi.duckdns.org
+    ports:
+      - "2000:80"
+    depends_on:
+        - sql
+    restart: always
+
+  sql:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: easysubapi_sqlserver2022
+    user: root
+    environment:
+      - ACCEPT_EULA=y
+      - TZ=Europe/Amsterdam
+      - SA_PASSWORD=A&VeryComplex123Password
+    ports:
+      - "2001:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
+    restart: always 
+
+  seq:
+    image: datalust/seq:latest
+    ports:
+        - '2004:80'
+        - '2003:5341'
+    environment:
+        ACCEPT_EULA: Y

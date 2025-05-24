@@ -2,10 +2,9 @@ version: '3.4'
 
 services:
   api:
-    image: easysub/api
-    #build:
-    #  context: .
-    #  dockerfile: Api/Dockerfile
+    build:
+      context: ./API
+      dockerfile: Dockerfile
     container_name: easysubapi
     environment:
       - TZ=Europe/Amsterdam
@@ -18,7 +17,7 @@ services:
     ports:
       - "2000:80"
     depends_on:
-        - sql
+      - sql
     restart: always
 
   sql:
@@ -35,12 +34,12 @@ services:
       - ./data:/var/opt/mssql/data
       - ./log:/var/opt/mssql/log
       - ./secrets:/var/opt/mssql/secrets
-    restart: always 
+    restart: always
 
   seq:
     image: datalust/seq:latest
     ports:
-        - '2004:80'
-        - '2003:5341'
+      - "2004:80"
+      - "2003:5341"
     environment:
-        ACCEPT_EULA: Y
+      - ACCEPT_EULA=Y

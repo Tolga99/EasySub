@@ -2,7 +2,7 @@
 setlocal
 
 REM Set your Docker Hub username and image names
-set DOCKER_USERNAME=tolga99
+set DOCKER_USERNAME=eovconsulting
 set API_IMAGE=easysubapi
 set WEB_IMAGE=easysubaweb
 set TAG=latest

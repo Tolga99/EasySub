@@ -2,18 +2,15 @@ version: '3.4'
 
 services:
   api:
+    #image: tolga99/easysubapi
     build:
-      context: ./API
+      context: .
       dockerfile: Dockerfile
     container_name: easysubapi
     environment:
       - TZ=Europe/Amsterdam
       - ASPNETCORE_URLS=http://*:80
       - ASPNETCORE_ENVIRONMENT=Development
-      - VIRTUAL_HOST=imazdigischoolapi.duckdns.org
-      - VIRTUAL_PORT=2000
-      - LETSENCRYPT_HOST=imazdigischoolapi.duckdns.org
-      - LETSENCRYPT_EMAIL=eov@imazdigischoolapi.duckdns.org
     ports:
       - "2000:80"
     depends_on:

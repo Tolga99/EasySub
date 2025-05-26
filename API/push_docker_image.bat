@@ -1,1 +1,1 @@
-docker build -t easysub/api .
+docker build -t tolga99/easysubapi .

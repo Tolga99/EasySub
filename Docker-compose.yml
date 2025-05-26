@@ -1,0 +1,55 @@
+version: '3.4'
+
+services:
+  api:
+    image: tolga99/easysubapi
+    build:
+      context: ./API
+      dockerfile: Dockerfile
+    container_name: easysubapi
+    environment:
+      - TZ=Europe/Amsterdam
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=easysubapi_sqlserver2022;Database=EasySubDB;User Id=sa;Password=A&VeryComplex123Password;MultipleActiveResultSets=true;TrustServerCertificate=True
+      - BotToken=your_bot_token_here
+      - EmailSettings__SmtpServer=smtp.gmail.com
+      - EmailSettings__Port=587
+      - EmailSettings__Username=your_email@gmail.com
+      - EmailSettings__Password=your_email_password
+      - Stripe__WebhookSecret=your_webhook_secret
+      - Stripe__SecretKey=your_stripe_secret_key
+      - Stripe__PublishableKey=your_stripe_publishable_key
+    ports:
+      - "3000:80"
+    depends_on:
+      - sql
+    restart: always
+
+  web:
+    image: tolga99/easysubaweb
+    build:
+      context: ./WWWeasySub
+      dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_URLS=http://*:80
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ApiBaseUrl=http://144.91.114.243:3000/
+    ports:
+      - 3001:80
+      
+  sql:
+    image: "mcr.microsoft.com/mssql/server:2022-latest"
+    container_name: easysubapi_sqlserver2022
+    user: root
+    environment:
+      - ACCEPT_EULA=y
+      - TZ=Europe/Amsterdam
+      - SA_PASSWORD=A&VeryComplex123Password
+    ports:
+      - "3002:1433"
+    volumes:
+      - ./data:/var/opt/mssql/data
+      - ./log:/var/opt/mssql/log
+      - ./secrets:/var/opt/mssql/secrets
+    restart: always

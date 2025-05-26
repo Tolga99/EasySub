@@ -12,14 +12,14 @@ services:
       - ASPNETCORE_URLS=http://*:80
       - ASPNETCORE_ENVIRONMENT=Development
       - ConnectionStrings__DefaultConnection=Server=easysubapi_sqlserver2022;Database=EasySubDB;User Id=sa;Password=A&VeryComplex123Password;MultipleActiveResultSets=true;TrustServerCertificate=True
-      - BotToken=your_bot_token_here
+      - BotToken=7840281998:AAG7E9aGBXryBsVzWJg6tudm_8-yL5uL5uYVgw
       - EmailSettings__SmtpServer=smtp.gmail.com
       - EmailSettings__Port=587
-      - EmailSettings__Username=your_email@gmail.com
-      - EmailSettings__Password=your_email_password
-      - Stripe__WebhookSecret=your_webhook_secret
-      - Stripe__SecretKey=your_stripe_secret_key
-      - Stripe__PublishableKey=your_stripe_publishable_key
+      - EmailSettings__Username=sva.records.o@gmail.com
+      - EmailSettings__Password=tgal dqwm kydj csql
+      - Stripe__WebhookSecret=whsec_llw4PwFuEoCSxSRsE5jFguLk4tEgEpxV
+      - Stripe__SecretKey=sk_test_51RKNsaQMSCWUg7Iy5jDu8Pl2HHUIDKxFkTrB99enRKOyxftu5tJc7zT6sNrHndGKqqEs9jG3Tu2pHcjLFP3hTXpo005K1SKCpp
+      - Stripe__PublishableKey=pk_test_51RKNsaQMSCWUg7Iy36ZcINrGCDJqYwfLEgI43KEinzsmkjsyPPMe95NeKyfhackWctNK17odBTUPM6TYjrfgl3rV00BzpL1THn
     ports:
       - "3000:80"
     depends_on:

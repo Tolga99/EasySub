@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    image: tolga99/easysubapi
+    image: tolgaov/easysubapi
     build:
       context: ./API
       dockerfile: Dockerfile
@@ -27,7 +27,7 @@ services:
     restart: always
 
   web:
-    image: tolga99/easysubaweb
+    image: tolgaov/easysubaweb
     build:
       context: ./WWWeasySub
       dockerfile: Dockerfile

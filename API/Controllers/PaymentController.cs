@@ -87,8 +87,8 @@ namespace API.Controllers
           },
         },
                 Mode = "payment",
-                SuccessUrl = $"https://api.easysub.me/subscription/{plan.Brand.Name}?session_id={{CHECKOUT_SESSION_ID}}",
-                CancelUrl = $"https://api.easysub.me/subscription/{plan.Brand.Name}?canceled=true",
+                SuccessUrl = $"https://easysub.me/subscription/{plan.Brand.Name}?session_id={{CHECKOUT_SESSION_ID}}",
+                CancelUrl = $"https://easysub.me/subscription/{plan.Brand.Name}?canceled=true",
                 Metadata = new Dictionary<string, string>
                 {
                     { "subscriptionId", sub.ToString() },

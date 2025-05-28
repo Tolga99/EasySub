@@ -28,7 +28,18 @@
   <ItemGroup>
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
+	<ItemGroup Condition="'$(Configuration)' == 'Release'">
+		<None Update="wwwroot/config.prod.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+			<TargetPath>wwwroot/config.json</TargetPath>
+		</None>
+	</ItemGroup>
 
+	<ItemGroup Condition="'$(Configuration)' == 'Debug'">
+		<None Update="wwwroot/config.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
   </ItemGroup>

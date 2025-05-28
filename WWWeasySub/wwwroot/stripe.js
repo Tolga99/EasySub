@@ -9,7 +9,7 @@
         culture: culture
     };
 
-    const response = await fetch("https://localhost:7237/api/payments/create-checkout-session", {
+    const response = await fetch("https://api.easysub.me/api/payments/create-checkout-session", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"

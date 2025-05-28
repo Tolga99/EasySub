@@ -2,7 +2,7 @@ version: '3.4'
 
 services:
   api:
-    image: tolgaov/easysubapi
+    image: eovconsulting/easysubapi
     build:
       context: ./API
       dockerfile: Dockerfile
@@ -27,14 +27,14 @@ services:
     restart: always
 
   web:
-    image: tolgaov/easysubaweb
+    image: eovconsulting/easysubaweb
     build:
       context: ./WWWeasySub
       dockerfile: Dockerfile
     environment:
       - ASPNETCORE_URLS=http://*:80
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ApiBaseUrl=http://144.91.114.243:3000/
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ApiBaseUrl=https://api.easysub.me/
     ports:
       - 3001:80
       

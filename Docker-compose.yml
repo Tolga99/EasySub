@@ -10,7 +10,7 @@ services:
     environment:
       - TZ=Europe/Amsterdam
       - ASPNETCORE_URLS=http://*:80
-      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_ENVIRONMENT=Production
       - ConnectionStrings__DefaultConnection=Server=easysubapi_sqlserver2022;Database=EasySubDB;User Id=sa;Password=A&VeryComplex123Password;MultipleActiveResultSets=true;TrustServerCertificate=True
       - BotToken=7840281998:AAG7E9aGBXryBsVzWJg6tudm_8-yL5uL5uYVgw
       - EmailSettings__SmtpServer=smtp.gmail.com

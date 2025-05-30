@@ -39,7 +39,7 @@ else
 						? $"data:image/png;base64,{Convert.ToBase64String(SelectedPlan.Brand.ImageData)}"
 						: "/logos/tabii.png"; // <- mets ici ton image par défaut
 					}
-					<img class="img-fluid" src="@imageSrc" style="width: 277px;height: 277px;" alt="@SelectedPlan?.Brand.Name ?? ''" />
+					<img class="img-fluid" src="@imageSrc" style="width: 277px;height: 277px; background-color:white" alt="@SelectedPlan?.Brand.Name ?? ''" />
 				</div>
 				<div class="row" style="display: flex;place-content: space-between;
     justify-content: center;    margin-top: 40px;

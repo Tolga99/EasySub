@@ -142,7 +142,7 @@ h1:focus {
     /* Style pour les images dans le carousel */
     .carousel-item img {
         width: 280px;
-        height: 190px;
+        height: 170px;
         border-radius: 8px;
     }
 

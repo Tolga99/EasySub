@@ -11,7 +11,12 @@
 				<img src="/images/swift0.png" style="margin-right:10px" />
 				<a style="color: #ffffff; text-align: left; font-family: 'Poppins-Medium', sans-serif; font-size: 24px; line-height: 118.2%; letter-spacing: -0.03em; font-weight: 500;">Easy Sub</a>
 			</div>
-            <div class="col-12 col-md-6 mt-3 mt-md-0">
+            <!-- Sélecteurs langue/devise -->
+            <div class="col-4 col-md-2 text-end" style="display:flex;">
+                <LanguageSelector />
+                <CurrencySelector />
+            </div>
+            <div class="col-12 col-md-6 mt-3 mb-3 mt-md-0">
                 <nav class="navbar navbar-light" style="background: rgba(255, 255, 255, 0.1); border-radius: 20px; height: auto; width: 100%; margin-top: 10px;">
                     <div class="container-fluid d-flex justify-content-center flex-wrap">
                         <ul class="navbar-nav flex-row flex-wrap justify-content-center w-100" style="gap: 10px;">
@@ -34,12 +39,6 @@
                     </div>
                 </nav>
             </div>
-
-			<!-- Sélecteurs langue/devise -->
-			<div class="col-4 col-md-2 text-end">
-				<LanguageSelector />
-				<CurrencySelector />
-			</div>
 		</div>
 
 		<article>

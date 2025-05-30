@@ -120,6 +120,9 @@
   <data name="About" xml:space="preserve">
     <value>A propos</value>
   </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Paiement</value>
+  </data>
   <data name="commandSucess" xml:space="preserve">
     <value>"Votre commande s'est passée avec succès. Vous recevrez votre commande sur votre adresse e-mail suivante : {email}. Vous serez livré entre 24h et 48h."
 </value>
@@ -189,6 +192,9 @@
   </data>
   <data name="Select" xml:space="preserve">
     <value>Sélectionnez</value>
+  </data>
+  <data name="SelectAPlan" xml:space="preserve">
+    <value>Sélectionner un plan</value>
   </data>
   <data name="TeamSignature" xml:space="preserve">
     <value>L’équipe Subeasy</value>

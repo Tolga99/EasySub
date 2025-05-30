@@ -26,7 +26,7 @@
                     @{
                         var imageSrc = brand.ImageData != null && brand.ImageData.Length > 0
                         ? $"data:image/png;base64,{Convert.ToBase64String(brand.ImageData)}"
-                        : "/logos/youtube.svg"; // <- mets ici ton image par défaut
+                        : "/logos/tabii.png"; // <- mets ici ton image par défaut
                     }
                     <img class="img-fluid" src="@imageSrc" alt="@brand.Name" />
                 <p class="carousel-item-name">@brand.Name</p>

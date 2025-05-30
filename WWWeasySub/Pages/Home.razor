@@ -15,33 +15,36 @@
 @inject IJSRuntime JS
 
 <PageTitle>@Localize["Home"]</PageTitle>
-<div class="container">
-	<div class="col-12 col-md-6 mb-4" style="padding-bottom: 130px; margin:75px ">
-		<div class="home-display display-flex-left home-display-detail">
-			<img style="opacity: 0.53; height: auto;position: absolute;position-area: center; margin-bottom: 25%; overflow: visible;" src="/images/group-30.svg">
-			<img src="/images/get-revenue0.png" style="margin-right: 10px;">
-			@Localize["PayLessEnjoyMore"]
-		</div>
-		<div class="home-display" style="margin: 40px 0px 35px 0px;">
-			<span class="home-title">Vos abonnements et logiciels aux</span>
-			<span class="home-title-gradient">meilleurs</span>
-			<span class="home-title">prix<br /></span>
-		</div>
-		<div>
-			<div class="home-title">
+<div class="container" style="place-content: space-evenly;">
+	<div class="row">
+		<div class="col-12 col-md-6 mb-4 px-3 pb-5">
+			<div class="home-display display-flex-left home-display-detail">
+				<div style="position: relative;">
+					<img src="/images/group-30.svg" style="position: absolute; top: 0; left: 0; max-width: 100%; height: auto; opacity: 0.5;">
+				</div>
+				<img src="/images/get-revenue0.png" style="margin-right: 10px;">
+				@Localize["PayLessEnjoyMore"]
 			</div>
-			<div class="home-display home-display-details home-subtext display-flex-left" style="  text-align: left; align-self: stretch;">
-				<span>
-					<span class="text-white text-regular">Accédez</span>
-					<span class="text-purple text-regular">facilement</span>
-					<span class="text-white text-regular">à vos services préférés à prix</span>
-					<span class="text-purple text-regular">réduits</span>
-					<span class="text-white text-regular">grâce a</span>
-					<span class="text-purple text-regular">SavePass</span>
-					<span class="text-white text-regular">!</span>
-				</span>
+			<div class="home-display" style="margin: 40px 0px 35px 0px;">
+				<span class="home-title">Vos abonnements et logiciels aux</span>
+				<span class="home-title-gradient">meilleurs</span>
+				<span class="home-title">prix<br /></span>
 			</div>
-@* 			<div class="home-display" style="margin: 20px 0px 20px 0px;">
+			<div>
+				<div class="home-title">
+				</div>
+				<div class="home-display home-display-details home-subtext display-flex-left" style="  text-align: left; align-self: stretch;">
+					<span>
+						<span class="text-white text-regular">Accédez</span>
+						<span class="text-purple text-regular">facilement</span>
+						<span class="text-white text-regular">à vos services préférés à prix</span>
+						<span class="text-purple text-regular">réduits</span>
+						<span class="text-white text-regular">grâce a</span>
+						<span class="text-purple text-regular">SavePass</span>
+						<span class="text-white text-regular">!</span>
+					</span>
+				</div>
+				@* 			<div class="home-display" style="margin: 20px 0px 20px 0px;">
 				<div class="frame-crypto">
 					<span class="crypto-text">@Localize["WeAcceptCryptos"]</span>
 					<img class="img-crypto" src="/images/cry1.png" />
@@ -50,34 +53,40 @@
 					<img class="img-crypto" src="/images/cry4.png" />
 				</div>
 			</div> *@
+			</div>
+		</div>
+		<div class="center-line"></div>
+		<div class="row" style="place-items: center;">
+			<div class="col-12">
+				<span class="section-title">@Localize["Trends"]</span>
+			</div>
+			<div class="col-12">
+				<BrandCarousel Category="Tendances" Title="Les Tendances" />
+			</div>
+		</div>
+		<div class="row" style="place-items: center;">
+			<span class="section-title">@Localize["Audio"]</span>
+			<div>
+				<BrandCarousel Category="Audio" Title="Audio" />
+			</div>
+		</div>
+		<div class="row" style="place-items: center;">
+			<div class="col-12">
+				<span class="section-title">@Localize["VOD"]</span>
+			</div>
+			<div class="col-12">
+				<BrandCarousel Category="VOD" Title="VOD" />
+			</div>
+		</div>
+		<div class="row" style="place-items: center;">
+			<div class="col-12">
+				<span class="section-title">@Localize["Gaming"]</span>
+			</div>
+			<div class="col-12">
+				<BrandCarousel Category="Gaming" Title="Gaming" />
+			</div>
 		</div>
 	</div>
-	<div class="center-line"></div>
-	<div class="row" style="place-items: center;">
-		<span class="section-title">@Localize["Trends"]</span>
-		<div>
-			<BrandCarousel Category="Tendances" Title="Les Tendances" />
-		</div>
-	</div>
-	<div class="row" style="place-items: center;">
-		<span class="section-title">@Localize["Audio"]</span>
-		<div>
-			<BrandCarousel Category="Audio" Title="Audio" />
-		</div>
-	</div>
-	<div class="row" style="place-items: center;">
-		<span class="section-title">@Localize["VOD"]</span>
-		<div>
-			<BrandCarousel Category="VOD" Title="VOD" />
-		</div>
-	</div>
-	<div class="row" style="place-items: center;">
-		<span class="section-title">@Localize["Gaming"]</span>
-		<div>
-			<BrandCarousel Category="Gaming" Title="Gaming" />
-		</div>
-	</div>
-
 </div>
 @code {
 

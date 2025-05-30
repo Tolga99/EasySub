@@ -37,7 +37,7 @@ else
 					@{
 						var imageSrc = SelectedPlan?.Brand.ImageData != null && SelectedPlan.Brand.ImageData.Length > 0
 						? $"data:image/png;base64,{Convert.ToBase64String(SelectedPlan.Brand.ImageData)}"
-						: "/logos/youtube.svg"; // <- mets ici ton image par défaut
+						: "/logos/tabii.png"; // <- mets ici ton image par défaut
 					}
 					<img class="img-fluid" src="@imageSrc" style="width: 277px;height: 277px;" alt="@SelectedPlan?.Brand.Name ?? ''" />
 				</div>
@@ -164,10 +164,12 @@ else
 				</div>
 				<div class="row" style="font-family: ' Inter-Bold', sans-serif;font-size: 28px;line-height: 73px;width: 100%;display: grid;place-content: center;height: 50%;">
 					<div>
-						<span class="payment-card-title">@selectedDuration month - </span>
+						<div class="row">
+							<span class="payment-card-title">@selectedDuration @Localize["months"] </span>
+						</div>
 						@if (SelectedPlan != null && Plans != null)
 						{
-							<MudSelect @bind-Value="SelectedPlan" Label="Select a Plan" AdornmentColor="Color.Primary"
+							<MudSelect @bind-Value="SelectedPlan" Label="@Localize["SelectAPlan"]" AdornmentColor="Color.Primary"
 									   Variant="Variant.Text" InputClass="select-plan" style="-webkit-text-fill-color: white;">
 								@foreach (var type in Plans.Where(a => a.DurationMonths == SelectedPlan.DurationMonths && SelectedPlan.BrandId == a.BrandId))
 								{
@@ -182,10 +184,13 @@ else
 						{
 							<span class="selling-price">@CurrencyService.Format(@SelectedPlan.Price)</span>
 						}
-						<MudTextField Label="Code promo" Style="color: white;"
-									  InputClass="custom-placeholder" @bind-Value="promoCode" Disabled="promoApplied" />
-						<MudButton Variant="Variant.Filled" Color="Color.Default" Style="color:white;" OnClick="ApplyPromoCode" Disabled="promoApplied">Valider</MudButton>
-
+						<div style="justify-items: center;">
+							<MudTextField Label="Code promo" Style="color: white;"
+										  InputClass="custom-placeholder" @bind-Value="promoCode" Disabled="promoApplied" />
+						</div>
+						<div class="row">
+							<MudButton Variant="Variant.Filled" Color="Color.Default" Style="color:white;" OnClick="ApplyPromoCode" Disabled="promoApplied">Valider</MudButton>
+						</div>
 						@if (!string.IsNullOrEmpty(promoMessage))
 						{
 							<MudText Color="@promoMessageColor">@promoMessage</MudText>
@@ -214,7 +219,7 @@ else
 					</div>
 					<div>
 						<button class="checkout-sub" @onclick="Checkout" disabled="@IsCheckoutDisabled">
-							Checkout
+							@Localize["Checkout"]
 						</button>
 					</div>
 				</div>
@@ -229,24 +234,24 @@ else
 			</MudText>
 		</TitleContent>
 
-<DialogContent>
-    <MudText Typo="Typo.body1" Class="mb-2">
-        @Localize["GreetingWithEmail"] @info.Email,
-    </MudText>
-    <MudText Typo="Typo.body1" Class="mb-2">
-        @Localize["OrderReceived"] <b>@info.Plan</b>.
-    </MudText>
-    <MudText Typo="Typo.body1" Class="mb-2">
-        @Localize["DeliveryTime"]
-    </MudText>
-    <MudText Typo="Typo.body1" Class="mb-2">
-        @Localize["ContactSupport"] <b>@supportEmail</b>
-    </MudText>
-    <MudText Typo="Typo.body1" Class="mt-3">
-        @Localize["ThankYou"]<br />
-        @Localize["TeamSignature"]
-    </MudText>
-</DialogContent>
+		<DialogContent>
+			<MudText Typo="Typo.body1" Class="mb-2">
+				@Localize["GreetingWithEmail"] @info.Email,
+			</MudText>
+			<MudText Typo="Typo.body1" Class="mb-2">
+				@Localize["OrderReceived"] <b>@info.Plan</b>.
+			</MudText>
+			<MudText Typo="Typo.body1" Class="mb-2">
+				@Localize["DeliveryTime"]
+			</MudText>
+			<MudText Typo="Typo.body1" Class="mb-2">
+				@Localize["ContactSupport"] <b>@supportEmail</b>
+			</MudText>
+			<MudText Typo="Typo.body1" Class="mt-3">
+				@Localize["ThankYou"]<br />
+				@Localize["TeamSignature"]
+			</MudText>
+		</DialogContent>
 
 		<DialogActions>
 			<MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="CloseDialog" Class="px-10">

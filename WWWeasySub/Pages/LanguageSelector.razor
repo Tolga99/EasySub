@@ -18,7 +18,7 @@
             <MudSelectItem T="CultureInfo"
             Value="@culture"
             Style="background-color:black; color:white;">
-                @culture.DisplayName
+                @culture.Name.Split('-').Last().ToUpper()
             </MudSelectItem>
         }
     </MudSelect>

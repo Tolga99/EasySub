@@ -217,8 +217,8 @@ else
 										  InputClass="custom-placeholder" @bind-Value="subscriptionModel.ConfirmEmail" Required="true" Error="@confirmEmailError" />
 						</MudForm>
 					</div>
-					<div>
-						<button class="checkout-sub" @onclick="Checkout" disabled="@IsCheckoutDisabled">
+					<div style="text-align: center;">
+						<button class="button checkout-sub" @onclick="Checkout" disabled="@IsCheckoutDisabled">
 							@Localize["Checkout"]
 						</button>
 					</div>
@@ -259,7 +259,45 @@ else
 			</MudButton>
 		</DialogActions>
 	</MudDialog>
+
 }
+<style>
+	.button {
+		position: relative;
+		background-color: #04AA6D;
+		border: none;
+		font-size: 28px;
+		color: #FFFFFF;
+		padding: 20px;
+		width: 200px;
+		text-align: center;
+		-webkit-transition-duration: 0.4s; /* Safari */
+		transition-duration: 0.4s;
+		text-decoration: none;
+		overflow: hidden;
+		cursor: pointer;
+	}
+
+		.button:after {
+			content: "";
+			background: #90EE90;
+			display: block;
+			position: absolute;
+			padding-top: 300%;
+			padding-left: 350%;
+			margin-left: -20px !important;
+			margin-top: -120%;
+			opacity: 0;
+			transition: all 0.8s
+		}
+
+		.button:active:after {
+			padding: 0;
+			margin: 0;
+			opacity: 1;
+			transition: 0s
+		}
+</style>
 @code {
 	private bool _visible;
 	private bool IsCheckoutDisabled =>

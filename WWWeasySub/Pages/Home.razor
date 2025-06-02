@@ -132,22 +132,21 @@
 				// Vérifie s’il y a déjà une culture choisie
 				var cultureInStorage = await JS.InvokeAsync<string>("blazorCulture.get");
 
-				// if (string.IsNullOrWhiteSpace(cultureInStorage))
-				// {
-				// 	// Appliquer et enregistrer la culture
-				// 	Localization.SetCulture(cultureCode);
-				// 	await JS.InvokeVoidAsync("blazorCulture.set", cultureCode);
+				if (string.IsNullOrWhiteSpace(cultureInStorage))
+				{
+					// Appliquer et enregistrer la culture
+					Localization.SetCulture(cultureCode);
+					await JS.InvokeVoidAsync("blazorCulture.set", cultureCode);
 
-				// 	// Optionnel : forcer le reload avec la nouvelle culture
-				// 	Nav.NavigateTo(Nav.Uri, forceLoad: true);
-				// 	return; // On sort ici car tout va recharger
-				// }
-				// else
-				// {
-				// 	// Appliquer la culture mémorisée pour le reste du composant
-				// 	Localization.SetCulture(cultureInStorage);
-				// }
-				Localization.SetCulture(cultureInStorage);
+					// Optionnel : forcer le reload avec la nouvelle culture
+					//Nav.NavigateTo(Nav.Uri, forceLoad: true);
+					// return; // On sort ici car tout va recharger
+				}
+				else
+				{
+					// Appliquer la culture mémorisée pour le reste du composant
+					Localization.SetCulture(cultureInStorage);
+				}
 
 				// Appliquer manuellement si tu veux l'utiliser localement
 				// Localization.SetCulture(cultureCode);
